@@ -1,0 +1,73 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button class="show-back-button" (click)="goBack()"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Add Activity</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content fullscreen>
+    <ion-card>
+        <ion-card-header class="ion-text-center">
+            <ion-card-title>What did you do?</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+            <ion-item>
+                <ion-label>Activity type</ion-label>
+                <ion-select [(ngModel)]="activity.type" placeholder="Select type" disabled="false">
+                    <ion-select-option *ngFor="let type of types">{{type | titlecase}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Intensity*</ion-label>
+                <ion-select [(ngModel)]="activity.intensity" placeholder="Select intensity">
+                    <ion-select-option
+                            *ngFor="let intensity of intensities">{{intensity | titlecase}}</ion-select-option>
+                </ion-select>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Start date</ion-label>
+                <ion-datetime [min]="minDate.format('YYYY-MM-DD')" [max]="today.format('YYYY-MM-DD')" placeholder="Select date"
+                              [(ngModel)]="date"></ion-datetime>
+            </ion-item>
+            <ion-item>
+                <ion-label>Start time</ion-label>
+                <ion-datetime placeholder="Select time" display-format="HH:mm" picker-format="HH:mm"
+                              [(ngModel)]="time"></ion-datetime>
+            </ion-item>
+
+            <ion-item>
+                <ion-label>Duration</ion-label>
+                <ion-input [(ngModel)]="minutes" type="number" placeholder="Minutes" class="ion-text-right"
+                           (ionChange)="checkInput()"></ion-input>
+            </ion-item>
+
+            <ion-label class="info-message"><a (click)="routeToInfoSingle()">*more info on intensities</a>
+            </ion-label>
+
+            <!--<ion-button expand="block">Add activity</ion-button>-->
+            <ion-label *ngIf='(today.valueOf() - activity.startTime.getTime()) < 0' color="secondary"
+                       class="error-message">
+                You cannot add activities for the future
+            </ion-label>
+            <ion-label *ngIf='minutes <= 0' color="secondary" class="error-message">Please fill in the duration
+            </ion-label>
+            <ion-label *ngIf='this.error == true' color="secondary" class="error-message">
+                Please do not leave fields empty
+            </ion-label>
+
+            <ion-button (click)=addActivity() color="secondary" type="submit" expand="block">Save</ion-button>
+        </ion-card-content>
+    </ion-card>
+</ion-content>
+
+
+
+  
+

@@ -1,0 +1,140 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-back-button class="show-back-button" (click)="goBack()"></ion-back-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Goals</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <div class="ion-padding-horizontal">
+        <h2>Set up your account</h2>
+    </div>
+
+    <div *ngIf="goalPromise | async as goals">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Daily Goal</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Set your goal for {{goals[0].duration}} active minutes!
+                </p>
+                <ion-item>
+                    <ion-range min="0" max="120" pin color="primary" step="5" snaps="true" [(ngModel)]="goals[0].target">
+                        <ion-icon slot="start" size="small" name="walk"></ion-icon>
+                        <ion-icon slot="end" name="walk"></ion-icon>
+                    </ion-range>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>Goal</ion-label>
+                    <ion-input type="number" slot="end" class="ion-text-right"
+                               [(ngModel)]="goals[0].target"></ion-input>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Weekly Goal</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Set your goal for {{goals[1].duration}} active minutes! WHO recommends 300 min, but at least 150 min as a minimum.
+                </p>
+
+                <ion-item>
+                    <ion-range min="0" max="600" pin color="secondary" step="10" snaps="true" [(ngModel)]="goals[1].target">
+                        <ion-icon slot="start" size="small" name="walk"></ion-icon>
+                        <ion-icon slot="end" name="walk"></ion-icon>
+                    </ion-range>
+                </ion-item>
+
+                <ion-item lines="none">
+                    <ion-label>Goal</ion-label>
+                    <ion-input type="number" slot="end" class="ion-text-right"
+                               [(ngModel)]="goals[1].target"></ion-input>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <div *ngIf="userObservable | async">
+        <ion-card>
+            <ion-card-header>
+                <ion-card-title>Your Profile</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+                <p>Please upload a picture of yourself and write a short bio so that other can get to know you.</p>
+                <ion-item lines="none">
+                    <ion-avatar slot="start">
+                        <img src="{{ (userObservable | async)?.profilePictureUrl }}">
+                        <!--img [src]="post.image"-->
+                    </ion-avatar>
+
+                    <ion-label>
+                        <h2>{{ (userObservable | async)?.name  }}</h2>
+                    </ion-label>
+                    <ion-label>
+                        <!--<div class="fileUpload btn btn-primary">
+                            <span>Select profile picture</span>
+
+                        </div>-->
+
+                        <ion-button color="secondary" (click)="uploadBtn.click()">
+                            Upload pic
+                        </ion-button>
+                        <input #uploadBtn
+                               id="uploadBtn"
+                               type="file"
+                               class="upload"
+                               (change)="uploadFile($event.target.files)"/>
+                    </ion-label>
+                </ion-item>
+
+                <div *ngIf="percentage | async as pct">
+                    Progress: {{ pct | number }}%
+                    <ion-progress-bar value="{{ pct / 100 }}"></ion-progress-bar>
+                </div>
+                <div *ngIf="snapshot | async as snap">
+                    File Size: {{ snap.totalBytes | fileSizePipe }} Transfered:
+                    {{ snap.bytesTransferred | fileSizePipe }}
+                    <div *ngIf="snapshot && snap.bytesTransferred != snap.totalBytes">
+                        <ion-button
+                                color="warning"
+                                size="small"
+                                (click)="task.pause()"
+                                class="button is-warning"
+                        >Pause
+                        </ion-button>
+                        <ion-button
+                                size="small"
+                                (click)="task.resume()"
+                                class="button is-info"
+                        >Resume
+                        </ion-button>
+                        <ion-button
+                                color="danger"
+                                size="small"
+                                (click)="task.cancel()"
+                                class="button is-danger"
+                        >Cancel
+                        </ion-button>
+                    </div>
+                </div>
+
+                <ion-item>
+                    <ion-label position="floating">Your bio</ion-label>
+                    <ion-input type="text" placeholder="Write something about yourself"
+                               [(ngModel)]="user.bio"></ion-input>
+                </ion-item>
+            </ion-card-content>
+        </ion-card>
+    </div>
+
+    <div class="ion-padding-horizontal">
+        <ion-button slot="end" expand="block" color="secondary" (click)="save()">Save All</ion-button>
+    </div>
+</ion-content>
