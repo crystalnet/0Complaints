@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from 'src/app/services/user/user.service';
 import {Observable} from 'rxjs';
+import {Task} from '../../model/task';
+import {TaskService} from '../../services/task/task.service';
 
 @Component({
     selector: 'app-dashboard-detail',
@@ -35,10 +37,12 @@ export class DashboardDetailPage implements OnInit {
     leaderboardB = false;
     socialB = false;
     rewardsB = false;
+    tasks: Observable<Task[]>;
 
-    constructor(private userService: UserService) {
+    constructor(private userService: UserService, private taskService: TaskService) {
         this.group = userService.getUsergroup();
         this.group.subscribe(group => this.updateGroup(group));
+        this.tasks = taskService.getAllAvailableTasks();
     }
 
     ngOnInit() {
@@ -55,35 +59,10 @@ export class DashboardDetailPage implements OnInit {
     updateGroup(group) {
         // BK: as a test I delted for group 1 the rewards page
         this.config = this.userService.getGroupconfig(group);
-        this.config.subscribe(config => this.setPages(config));
-
     }
 
-    setPages(config) {
-        const array = JSON.parse(config);
-        this.allServices = [];
-        for (const i of array) {
-            switch (i) {
-                case 'Leaderboard': {
-                    this.allServices.push(this.leaderboard);
-                    this.leaderboardB = true;
-                    break;
-                }
-                case 'Social': {
-                    this.allServices.push(this.social);
-                    this.socialB = true;
-                    break;
-                }
-                case 'Rewards': {
-                    this.allServices.push(this.rewards);
-                    this.rewardsB = true;
-                    break;
-                }
-                default: {
-                    break;
-                }
-            }
-        }
+    completeTask(task) {
+        this.taskService.completeTask(task);
     }
 
 }

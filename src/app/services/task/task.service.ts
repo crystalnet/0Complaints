@@ -57,7 +57,7 @@ export class TaskService {
     getAllAvailableTasks() {
         const ref = this.fireDatabase.list<any>('/tasks/');
         return ref.snapshotChanges().pipe(map(task => task.map(
-            chalSnapshot => Task.fromFirebaseObject(chalSnapshot.key, chalSnapshot.payload.val()))));
+            taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }
 
     // return this.fireDatabase.list<Challenge>('tasks').valueChanges();
