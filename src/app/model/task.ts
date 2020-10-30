@@ -2,40 +2,32 @@ interface FireBaseObject {
     id: string;
     description: string;
     endTime: string;
-    price: string;
     startTime: string;
+    done: boolean;
     finished: boolean;
     title: string;
-    participants: any;
     registered: number;
-    winner: string;
+    assignee: string;
 }
 
-export class Challenge {
+export class Task {
     /**
      * Constructor to create Challenge
      *
      * Each parameter is optional. If it's not present, a default value is used
      *
      */
-    constructor(id?: string, description?: string, endTime?: Date, price?: string, startTime?: Date, title?: string,
-                participantObject?: any, finished?: boolean, winner?: string) {
+    constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, title?: string, finished?: boolean, assignee?: string,
+                done?: boolean) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
         this.endTime = endTime || new Date();
-        this.price = price || '';
         this.startTime = startTime || new Date();
         this.title = title || '';
-        this.participants = [];
-        // to get the number iterates through the object of participants
-        if (participantObject !== undefined) {
-            for (const user of Object.keys(participantObject)) {
-                this.participants.push(participantObject[user]);
-            }
-        }
+        this.done = done || false;
         this.finished = finished || false;
-        this.winner = winner;
+        this.assignee = assignee || 'not assigned';
     }
 
     static types = ['running', 'swimming', 'workout'];
@@ -43,14 +35,13 @@ export class Challenge {
     id: string;
     description: string;
     endTime: Date;
-    price: string;
     startTime: Date;
     title: string;
+    done: boolean;
     finished: boolean;
-    participants: Array<any>;
     startTimeIso: string;
     endTimeIso: string;
-    winner: string;
+    assignee: string;
 
     /**
      * Creates an Challenge object from a firebase query
@@ -61,16 +52,15 @@ export class Challenge {
      * @param firebaseObject result of the query
      */
     static fromFirebaseObject(id: string, firebaseObject: FireBaseObject) {
-        return new Challenge(
+        return new Task(
             id || '',
             firebaseObject.description || '',
             new Date(firebaseObject.endTime) || new Date(),
-            firebaseObject.price || '',
             new Date(firebaseObject.startTime) || new Date(),
             firebaseObject.title || '',
-            firebaseObject.participants || 0,
             firebaseObject.finished,
-            firebaseObject.winner
+            firebaseObject.assignee,
+            firebaseObject.done
         );
     }
 
@@ -86,12 +76,11 @@ export class Challenge {
         return {
             description: this.description,
             endTime: this.endTime.getTime(),
-            price: this.price,
             startTime: this.startTime.getTime(),
             title: this.title,
             finished: this.finished,
-            participants: this.participants,
-          //  winner: this.winner
+            done: this.done,
+            assignee: this.assignee
         };
 
     }

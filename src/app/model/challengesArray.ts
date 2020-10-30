@@ -1,6 +1,3 @@
-import {Goal} from './goal';
-import {Challenge} from './challenge';
-
 interface FireBaseObject {
     id: string;
     won: any;

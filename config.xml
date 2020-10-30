@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="com.moveitproject.www" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>MoveIt</name>
-    <description>An awesome new health app.</description>
+<widget id="com.c0mplaints.www" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+    <name>0Complaints</name>
+    <description>An awesome new retail task management app.</description>
     <author email="konschmi@mail.uni-mannheim.de" href="https://github.com/crystalneth">Konstantin Schmidt</author>
     <content src="index.html" />
     <access origin="*" />

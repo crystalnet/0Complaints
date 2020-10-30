@@ -67,8 +67,6 @@ export class InitialSetupPage implements OnInit {
 
         promises.push(this.goalService.adjustGoal(this.dailyActive, this.dailyActive.target));
         promises.push(this.goalService.adjustGoal(this.weeklyActive, this.weeklyActive.target));
-        promises.push(this.userService.updateBio(this.user.bio));
-
 
         Promise.all(promises).then(
             res => {

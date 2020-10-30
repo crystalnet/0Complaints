@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {PopoverController, ToastController} from '@ionic/angular';
 import {AlertController} from '@ionic/angular';
-import {Challenge} from '../model/challenge';
-import {ChallengeService} from '../services/challenges/challenge.service';
+import {Task} from '../model/task';
+import {TaskService} from '../services/task/task.service';
 
 @Component({
     selector: 'app-challenge-popover',
@@ -11,12 +11,13 @@ import {ChallengeService} from '../services/challenges/challenge.service';
 })
 export class ChallengePopoverComponent implements OnInit {
 
-    challenge: Challenge;
+    challenge: Task;
     startTime: any;
     endTime: any;
 
-    constructor(public popoverController: PopoverController, private challengeService: ChallengeService, public alertController: AlertController, public toastController: ToastController) {
-        this.challenge = new Challenge();
+    constructor(public popoverController: PopoverController, private challengeService: TaskService, public alertController: AlertController,
+                public toastController: ToastController) {
+        this.challenge = new Task();
         console.log(this.challenge);
 
     }
@@ -25,7 +26,7 @@ export class ChallengePopoverComponent implements OnInit {
     }
 
     async presentToast() {
-        const controller = await this.toastController.create({
+        await this.toastController.create({
             color: 'dark',
             duration: 2000,
             message: 'Challenge added successfully!',
@@ -66,26 +67,16 @@ export class ChallengePopoverComponent implements OnInit {
 
     addChallenge() {
         console.log(this.challenge);
-        const participantsArray = [];
-        const participants = {};
-
-        const random = Math.random() * 30;
 
         this.challenge.startTime.setHours(0, 0, 0, 0);
         this.challenge.endTime.setHours(23, 59, 59, 999);
 
 
-        for (let i = 0; i < random; i++) {
-            participants['test' + i] = i;
-        }
-
-        this.challenge.participants = [];
-
         if (this.challenge.startTime.getTime() - this.challenge.endTime.getTime() > 0) {
             return;
         }
 
-        this.challengeService.createChallenge(this.challenge, participants).then(
+        this.challengeService.createTask(this.challenge).then(
             (challenge) => {
                 console.log(challenge);
                 this.presentToast();

@@ -18,7 +18,7 @@ import {TrophyArray} from 'src/app/model/trophyArray';
 
 import {ChallengesArray} from 'src/app/model/challengesArray';
 
-import {ChallengeService} from '../../services/challenges/challenge.service';
+import {TaskService} from '../../services/task/task.service';
 
 import {UserService} from '../../services/user/user.service';
 
@@ -59,7 +59,7 @@ export class LeaderboardDetailPage implements OnInit {
     currentUser: User;
     userObservable: Observable<any>;
 
-    constructor(private router: Router, private challService: ChallengeService, private goalService: GoalService,
+    constructor(private router: Router, private challService: TaskService, private goalService: GoalService,
                 private trophyService: TrophyService, private userService: UserService, private location: Location) {
     }
 
@@ -84,7 +84,7 @@ export class LeaderboardDetailPage implements OnInit {
                 this.pushTrophyObjects(result2);
             });
 
-            this.challengesObserve = this.challService.getListOfAllUserAndTheirWonChallenges();
+            this.challengesObserve = this.challService.getListOfAllUserAndTheirWonTasks();
             this.challengesObserve.subscribe(result3 => {
                 this.pushChallengeObjects(result3);
             });

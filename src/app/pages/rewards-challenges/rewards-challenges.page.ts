@@ -1,9 +1,9 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
-import {Challenge} from '../../model/challenge';
+import {Task} from '../../model/task';
 
-import {ChallengeService} from '../../services/challenges/challenge.service';
+import {TaskService} from '../../services/task/task.service';
 
 import {combineLatest} from 'rxjs';
 import {TrackingService} from '../../services/tracking/tracking.service';
@@ -15,12 +15,12 @@ import {TrackingService} from '../../services/tracking/tracking.service';
 })
 export class RewardsChallengesPage implements OnInit, OnDestroy {
     trophies: any;
-    challenges: Array<Challenge> = [];
-    activeChallenges: Array<Challenge> = [];
+    challenges: Array<Task> = [];
+    activeChallenges: Array<Task> = [];
 
     date: Date;
 
-    constructor(private challengeService: ChallengeService, private location: Location, private trackingService: TrackingService) {
+    constructor(private challengeService: TaskService, private location: Location, private trackingService: TrackingService) {
         this.location = location;
 
         // this.challengeService.getAllChallenges().subscribe(challenges => {
@@ -30,13 +30,13 @@ export class RewardsChallengesPage implements OnInit, OnDestroy {
         //     }
         // );
 
-        combineLatest([this.challengeService.getAllChallenges(), this.challengeService.getAllUserActiveChallenges()])
+        combineLatest([this.challengeService.getAllTasks(), this.challengeService.getAllUserActiveTasks()])
             .subscribe(([challengesList, activeChallengeIds]) => {
                 const activeChallenges = [];
                 const challenges = challengesList.map(x => x);
                 for (const challengeId of activeChallengeIds) {
                     const challenge = challenges.find(element => element.id === challengeId);
-                    if (challenge instanceof Challenge) {
+                    if (challenge instanceof Task) {
                         activeChallenges.push(challenge);
                     } else {
                         console.log(challengeId);
@@ -65,19 +65,19 @@ export class RewardsChallengesPage implements OnInit, OnDestroy {
     /**
      * this adds an challenge if you want to participate
      */
-    addToActiveList(challenge: Challenge) {
-        this.challengeService.registerOnChallenge(challenge);
-        this.challengeService.addChallengeToActive(challenge);
+    addToActiveList(challenge: Task) {
+        this.challengeService.registerOnTask(challenge);
+        this.challengeService.addTaskToActive(challenge);
     }
 
     /**
      * this sorts the array which the user has registered to according to challenges
      * @param activeChallenge activeChallenge array
      */
-    removeFromActiveList(activeChallenge: Challenge) {
+    removeFromActiveList(activeChallenge: Task) {
         this.challenges.push(activeChallenge);
-        this.challengeService.deRegisterOnChallenge(activeChallenge);
-        this.challengeService.removeChallengeFromActive(activeChallenge);
+        this.challengeService.deRegisterOnTask(activeChallenge);
+        this.challengeService.removeTaskFromActive(activeChallenge);
     }
 
     /**
@@ -112,7 +112,7 @@ export class RewardsChallengesPage implements OnInit, OnDestroy {
      * sorts the ended challenges out according to finish or endtime
      * @param challenges array of all challenges
      */
-    identifyInvalidChallenges(challenges: Array<Challenge>) {
+    identifyInvalidChallenges(challenges: Array<Task>) {
         this.date = new Date();
         for (let i = 0; i < challenges.length; i++) {
             if (challenges[i].endTime.getTime() < this.date.getTime() || challenges[i].finished) {

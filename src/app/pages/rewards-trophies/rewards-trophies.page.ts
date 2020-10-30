@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Location} from '@angular/common';
 
-import {ChallengeService} from '../../services/challenges/challenge.service';
+import {TaskService} from '../../services/task/task.service';
 import {RewardsService} from '../../services/rewards/rewards.service';
 import {Trophy} from '../../model/trophy';
 import {ActivityService} from '../../services/activity/activity.service';
@@ -23,7 +23,7 @@ export class RewardsTrophiesPage implements OnInit, OnDestroy {
     activities: Array<Activity>;
     goals: object;
 
-    constructor(private challService: ChallengeService, private location: Location, private rewardsService: RewardsService,
+    constructor(private challService: TaskService, private location: Location, private rewardsService: RewardsService,
                 private activityService: ActivityService, private goalService: GoalService, public popoverController: PopoverController,
                 private trackingService: TrackingService) {
         this.location = location;

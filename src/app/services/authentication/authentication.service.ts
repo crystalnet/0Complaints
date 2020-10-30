@@ -38,11 +38,7 @@ export class AuthenticateService {
                                 const promises = [];
                                 promises.push(this.removeOTP(otp));
                                 // Try to create the user on the database
-                                promises.push(this.db.database.ref('/challengesStatus/' + user.id + '/won/default').set('default'));
                                 promises.push(this.registerOnDatabase(user));
-                                promises.push(this.goalService.initializeUserGoals());
-                                promises.push(this.rewardsService.initializeTrophies());
-                                promises.push(this.addUserTimesToSchedule(user));
                                 Promise.all(promises).then(
                                     () => resolve(),
                                     err => reject(err)
@@ -80,13 +76,6 @@ export class AuthenticateService {
         promises.push(this.db.object<any>('/users/' + user.id).set(user.toFirebaseObject()));
         promises.push(this.db.object<any>('/publicUserData/' + user.id).set(user.toPublicUserData()));
         return Promise.all(promises);
-    }
-
-    addUserTimesToSchedule(user: User) {
-        for (const t of user.times) {
-            const time = new Date(t);
-            this.db.database.ref('/times/' + time.getHours() + '/' + time.getMinutes()).push(user.id);
-        }
     }
 
     loginUser(value) {

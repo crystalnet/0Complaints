@@ -25,14 +25,14 @@ import { IonicStorageModule } from '@ionic/storage';
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
 
 const firebaseConfig = {
-    apiKey: 'AIzaSyAeeexHFSp2HevDoOi7MdzCLdgET6QtMg4',
-    authDomain: 'moveit-2019.firebaseapp.com',
-    databaseURL: 'https://moveit-2019.firebaseio.com',
-    projectId: 'moveit-2019',
-    storageBucket: 'moveit-2019.appspot.com',
-    messagingSenderId: '743283522973',
-    appId: '1:743283522973:web:43cd7c986b9811d8100374',
-    measurementId: 'G-1N6YS1R28Y'
+    apiKey: 'AIzaSyAbbpaQhoH_R7M3NVevSeWnjwZ8dLF4AS0',
+    authDomain: 'c0mplaints.firebaseapp.com',
+    databaseURL: 'https://c0mplaints.firebaseio.com',
+    projectId: 'c0mplaints',
+    storageBucket: 'c0mplaints.appspot.com',
+    messagingSenderId: '523886203945',
+    appId: '1:523886203945:web:2870799446dab9f4e73838',
+    measurementId: 'G-60VHDCK3Z3'
 };
 
 

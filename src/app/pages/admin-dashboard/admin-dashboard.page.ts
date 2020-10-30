@@ -19,8 +19,8 @@ export class AdminDashboardPage implements OnInit {
       url: '/admin-dashboard/export'
     },
     {
-      title: 'Challenges',
-      url: '/admin-dashboard/challenges'
+      title: 'Tasks',
+      url: '/admin-dashboard/tasks'
     },
     {
       title: 'Notifications',

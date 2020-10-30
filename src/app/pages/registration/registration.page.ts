@@ -29,15 +29,7 @@ export class RegistrationPage implements OnInit {
         name: [
             {type: 'required', message: 'Please enter a name'}
         ],
-        birthday: [{type: 'required', message: 'Please set a birthday'}],
-        gender: [{type: 'required', message: 'Please choose your gender'}],
-        degree: [{type: 'required', message: 'Please select a degree'}],
-        occupation: [{type: 'required', message: 'Please select an occupation'}],
         terms: [{type: 'required', message: 'Please accept the terms'}],
-        time1: [{type: 'required', message: 'Please choose a time'}],
-        time2: [{type: 'required', message: 'Please choose a time'}],
-        time3: [{type: 'required', message: 'Please choose a time'}],
-        time4: [{type: 'required', message: 'Please choose a time'}]
     };
     birthday: Date;
     maxDate: number = new Date().getFullYear() - 10;
@@ -61,16 +53,8 @@ export class RegistrationPage implements OnInit {
                 Validators.required
             ])),
             name: new FormControl('', Validators.required),
-            birthday: new FormControl('', Validators.required),
-            gender: new FormControl('', Validators.required),
-            degree: new FormControl('', Validators.required),
-            occupation: new FormControl('', Validators.required),
             terms: new FormControl('', Validators.requiredTrue),
-            code: new FormControl('', Validators.required),
-            time1: new FormControl('', Validators.required),
-            time2: new FormControl('', Validators.required),
-            time3: new FormControl('', Validators.required),
-            time4: new FormControl('', Validators.required)
+            code: new FormControl('', Validators.required)
         }, { updateOn: 'blur' });
         this.validationsForm.get('terms').setValue(false);
     }
@@ -86,20 +70,15 @@ export class RegistrationPage implements OnInit {
 
         const user = new User();
         user.name = value.name;
-        user.gender = value.gender;
-        user.degree = value.degree;
-        user.occupation = value.occupation;
         user.profilePictureUrl = 'https://firebasestorage.googleapis.com/v0/b/moveit-2019.appspot.com/o/profilePic%2FdefaultPic?alt=media&token=77281e2a-9855-4b8a-b8dc-74ee60092cc4';
-        user.birthday = new Date(value.birthday);
-        user.birthday.setHours(0, 0, 0, 0);
-        user.times = [value.time1, value.time2, value.time3, value.time4];
+
         this.authService.registerUser(value.code, value.email, value.password, user)
             .then(res => {
                 console.log(res);
                 loading.dismiss();
                 this.errorMessage = '';
                 this.successMessage = 'Your account has been created. Please log in.';
-                this.navCtrl.navigateRoot('/menu/initial-setup');
+                this.navCtrl.navigateRoot('/menu/dashboard');
             }, err => {
                 console.log(err);
                 loading.dismiss();

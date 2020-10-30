@@ -5,13 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { AdminDashboardChallengesPage } from './admin-dashboard-challenges.page';
+import { AdminDashboardTasksPage } from './admin-dashboard-tasks.page';
 import { ChallengePopoverComponent } from 'src/app/challenge-popover/challenge-popover.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: AdminDashboardChallengesPage
+    component: AdminDashboardTasksPage
   }
 ];
 
@@ -23,6 +23,6 @@ const routes: Routes = [
     RouterModule.forChild(routes)
   ],
   entryComponents: [ChallengePopoverComponent],
-  declarations: [AdminDashboardChallengesPage, ChallengePopoverComponent]
+  declarations: [AdminDashboardTasksPage, ChallengePopoverComponent]
 })
-export class AdminDashboardChallengesPageModule {}
+export class AdminDashboardTasksPageModule {}

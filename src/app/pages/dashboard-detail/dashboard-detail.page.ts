@@ -29,12 +29,6 @@ export class DashboardDetailPage implements OnInit {
         image: './assets/rewards2.png'
     };
 
-    information = {
-        label: 'Information',
-        routerLink: '/menu/information',
-        image: './assets/information.png'
-    };
-
     group: Observable<string>;
     config: Observable<string>;
     selectedPath = '';
@@ -90,7 +84,6 @@ export class DashboardDetailPage implements OnInit {
                 }
             }
         }
-        this.allServices.push(this.information); // Information is visible for all users and therefore always added
     }
 
 }

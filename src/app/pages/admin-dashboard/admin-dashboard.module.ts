@@ -21,8 +21,8 @@ const routes: Routes = [
         loadChildren: '../admin-dashboard-export/admin-dashboard-export.module#AdminDashboardExportPageModule'
       },
       {
-        path: 'challenges',
-        loadChildren: '../admin-dashboard-challenges/admin-dashboard-challenges.module#AdminDashboardChallengesPageModule'
+        path: 'tasks',
+        loadChildren: '../admin-dashboard-tasks/admin-dashboard-tasks.module#AdminDashboardTasksPageModule'
       },
       {
         path: 'notifications',

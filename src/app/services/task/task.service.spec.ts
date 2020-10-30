@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { ChallengeService } from './challenge.service';
+import { TaskService } from './task.service';
 
 describe('ChallengeService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: ChallengeService = TestBed.get(ChallengeService);
+    const service: TaskService = TestBed.get(TaskService);
     expect(service).toBeTruthy();
   });
 });
