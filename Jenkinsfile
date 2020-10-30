@@ -3,6 +3,9 @@ pipeline {
       environment {
          PATH='/usr/local/bin:/usr/bin:/bin'
       }
+      tools {
+            nodejs "nodejs"
+      }
    stages {
       stage('NPM Setup') {
       steps {
