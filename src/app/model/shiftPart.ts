@@ -1,6 +1,7 @@
 interface FireBaseObject {
     id: string;
     description: string;
+    shift: string;
     endTime: string;
     startTime: string;
     participant: string;
@@ -15,7 +16,7 @@ export class ShiftPart {
      *
      */
     constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, participant?: string, tasks?: Array<object>,
-                done?: boolean) {
+                shift?: string) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
@@ -23,6 +24,7 @@ export class ShiftPart {
         this.startTime = startTime || new Date();
         this.participant = participant || '';
         this.tasks = tasks|| [];
+        this.shift = shift || '';
     }
 
     static types = ['running', 'swimming', 'workout'];
@@ -33,6 +35,7 @@ export class ShiftPart {
     startTime: Date;
     participant: string;
     tasks: Array<object>;
+    shift: string;
 
     /**
      * Creates an Shift object from a firebase query
@@ -43,13 +46,14 @@ export class ShiftPart {
      * @param firebaseObject result of the query
      */
     static fromFirebaseObject(id: string, firebaseObject: FireBaseObject) {
-        return new Shift(
+        return new ShiftPart(
             id || '',
             firebaseObject.description || '',
             new Date(firebaseObject.endTime) || new Date(),
             new Date(firebaseObject.startTime) || new Date(),
             firebaseObject.participant || '',
-            firebaseObject.tasks || []
+            firebaseObject.tasks || [],
+            firebaseObject.shift || ''
         );
     }
 
@@ -67,7 +71,8 @@ export class ShiftPart {
             endTime: this.endTime.getTime(),
             startTime: this.startTime.getTime(),
             participant: this.participant,
-            tasks: this.tasks
+            tasks: this.tasks,
+            shift: this.shift
         };
 
     }

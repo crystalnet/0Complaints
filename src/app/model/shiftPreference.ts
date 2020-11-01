@@ -1,6 +1,7 @@
 interface FireBaseObject {
     id: string;
     description: string;
+    shift:string;
     endTime: string;
     startTime: string;
     participant: string;
@@ -13,13 +14,14 @@ export class ShiftPreference {
      * Each parameter is optional. If it's not present, a default value is used
      *
      */
-    constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, participant?: string) {
+    constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, participant?: string, shift?: string) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
         this.endTime = endTime || new Date();
         this.startTime = startTime || new Date();
         this.participant = participant || '';
+        this.shift = shift || '';
     }
 
     static types = ['running', 'swimming', 'workout'];
@@ -29,6 +31,7 @@ export class ShiftPreference {
     endTime: Date;
     startTime: Date;
     participant: string;
+    shift: string;
 
     /**
      * Creates an Shift object from a firebase query
@@ -39,12 +42,13 @@ export class ShiftPreference {
      * @param firebaseObject result of the query
      */
     static fromFirebaseObject(id: string, firebaseObject: FireBaseObject) {
-        return new Shift(
+        return new ShiftPreference(
             id || '',
             firebaseObject.description || '',
             new Date(firebaseObject.endTime) || new Date(),
             new Date(firebaseObject.startTime) || new Date(),
-            firebaseObject.participant || ''
+            firebaseObject.participant || '',
+            firebaseObject.shift || ''
         );
     }
 
@@ -61,7 +65,8 @@ export class ShiftPreference {
             description: this.description,
             endTime: this.endTime.getTime(),
             startTime: this.startTime.getTime(),
-            participant: this.participant
+            participant: this.participant,
+            shift: this.shift
         };
 
     }
