@@ -8,6 +8,9 @@ interface FireBaseObject {
     title: string;
     registered: number;
     assignee: string;
+    active: boolean;
+    workStart: string;
+    workEnd: string;
 }
 
 export class Task {
@@ -18,7 +21,7 @@ export class Task {
      *
      */
     constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, title?: string, finished?: boolean, assignee?: string,
-                done?: boolean) {
+                done?: boolean, active?: boolean, workStart?: Date, workEnd?: Date) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
@@ -28,10 +31,11 @@ export class Task {
         this.done = done || false;
         this.finished = finished || false;
         this.assignee = assignee || 'not assigned';
+        this.active = active || false;
+        this.workStart = workStart || new Date(0);
+        this.workEnd = workEnd || new Date(0);
     }
 
-    static types = ['running', 'swimming', 'workout'];
-    static intensities = ['moderate', 'vigorous', 'weight training'];
     id: string;
     description: string;
     endTime: Date;
@@ -39,9 +43,10 @@ export class Task {
     title: string;
     done: boolean;
     finished: boolean;
-    startTimeIso: string;
-    endTimeIso: string;
     assignee: string;
+    active: boolean;
+    workStart: Date;
+    workEnd: Date;
 
     /**
      * Creates an Challenge object from a firebase query
@@ -60,7 +65,10 @@ export class Task {
             firebaseObject.title || '',
             firebaseObject.finished,
             firebaseObject.assignee,
-            firebaseObject.done
+            firebaseObject.done,
+            firebaseObject.active,
+            new Date(firebaseObject.workStart) || new Date(),
+            new Date(firebaseObject.workEnd) || new Date()
         );
     }
 
@@ -80,7 +88,10 @@ export class Task {
             title: this.title,
             finished: this.finished,
             done: this.done,
-            assignee: this.assignee
+            assignee: this.assignee,
+            active: this.active,
+            workStart: this.workStart.getTime(),
+            workEnd: this.workEnd.getTime()
         };
 
     }

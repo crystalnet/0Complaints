@@ -55,7 +55,7 @@ export class AdminDashboardTasksPage implements OnInit {
     }
 
     async presentToast() {
-        const controller = await this.toastController.create({
+        await this.toastController.create({
             color: 'dark',
             duration: 2000,
             message: 'Task edited successfully!',
@@ -103,7 +103,7 @@ export class AdminDashboardTasksPage implements OnInit {
 
     assign(task: Task, userId: string) {
         console.log(userId);
-        this.taskService.setAssignee(task, userId).then(
+        this.taskService.assign(task, userId).then(
             res => console.log(res),
             err => console.log(err)
         );

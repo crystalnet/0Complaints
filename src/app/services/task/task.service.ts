@@ -36,16 +36,6 @@ export class TaskService {
         });
     }
 
-    setParticipants(task: Task) {
-        return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('participants')
-                .child(firebase.auth().currentUser.uid).set(firebase.auth().currentUser.uid).then(
-                res => resolve(res),
-                err => reject(err)
-            );
-        });
-    }
-
     editTask(task: Task) {
         console.log(task);
         return firebase.database().ref('/tasks/' + task.id).set(task.toFirebaseObject());
@@ -60,8 +50,6 @@ export class TaskService {
             taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }
 
-    // return this.fireDatabase.list<Challenge>('tasks').valueChanges();
-
 
     /**
      * this is necessary in order to get all own active tasks to sort it in the frontend then
@@ -72,22 +60,6 @@ export class TaskService {
         // An array of Goals is reconstructed using the fromFirebaseObject method
         return merge(of([]), ref.snapshotChanges().pipe(
             map(tasks => tasks.map(goalPayload => goalPayload.key))));
-    }
-
-
-    /**
-     * this methods returns the participants node as a object which is then converted to an array in order to determine it length
-     * @param task identify a specific task and its participants
-     */
-    getListOfParticipants(task: Task) {
-        return new Promise<any>((resolve, reject) => {
-
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('participants').once('value')
-                .then(
-                    res => resolve(res),
-                    err => reject(err)
-                );
-        });
     }
 
 
@@ -114,18 +86,6 @@ export class TaskService {
      * this method adds the task to the users array which is necessary to determine the participated tasks
      * @param task identify the specific task which the user wants to participate
      */
-
-    /*addChallengeToActive(task: Array<Challenge>) {
-        return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/users/' + firebase.auth().currentUser.uid).child('tasksActive')
-                .set(task).then(
-                res => resolve(res),
-                err => reject(err)
-            );
-        });
-    }*/
-
-
     addTaskToActive(task: Task) {
         return new Promise<any>((resolve, reject) => {
             this.fireDatabase.database.ref('/users/' + firebase.auth().currentUser.uid).child('tasksActive')
@@ -140,34 +100,6 @@ export class TaskService {
         return new Promise<any>((resolve, reject) => {
             this.fireDatabase.database.ref('/users/' + firebase.auth().currentUser.uid).child('tasksActive')
                 .child(task.id).remove().then(
-                res => resolve(res),
-                err => reject(err)
-            );
-        });
-    }
-
-    /**
-     * increment the participants array in order to show it to the others
-     * @param task identify task
-     */
-    registerOnTask(task: Task) {
-        return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('participants')
-                .child(firebase.auth().currentUser.uid).set(firebase.auth().currentUser.uid).then(
-                res => resolve(res),
-                err => reject(err)
-            );
-        });
-    }
-
-    /**
-     * decrement the participants array in order to show it to the others
-     * @param task identify task
-     */
-    deRegisterOnTask(task: Task) {
-        return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('participants')
-                .child(firebase.auth().currentUser.uid).remove().then(
                 res => resolve(res),
                 err => reject(err)
             );
@@ -193,13 +125,13 @@ export class TaskService {
      * @param task identify the task
      */
     completeTask(task: Task) {
-        return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('done')
-                .set('true').then(
-                res => resolve(res),
-                err => reject(err)
-            );
-        });
+        if (!task.workStart) {
+            task.workStart = new Date();
+        }
+        task.active = false;
+        task.workEnd = new Date();
+        task.done = true;
+        return this.editTask(task);
     }
 
     /**
@@ -207,7 +139,7 @@ export class TaskService {
      * @param task the task to identify
      * @param uid the uid who wins this task
      */
-    setAssignee(task: Task, uid: string) {
+    assign(task: Task, uid: string) {
         return new Promise<any>((resolve, reject) => {
             this.fireDatabase.database.ref('/tasks/' + task.id).child('assignee')
                 .set(uid).then(
@@ -217,5 +149,9 @@ export class TaskService {
         });
     }
 
-
+    startTask(task: Task) {
+        task.active = true;
+        task.workStart = new Date();
+        return this.editTask(task);
+    }
 }
