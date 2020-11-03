@@ -19,6 +19,10 @@ import * as moment from 'moment-timezone';
 
 })
 export class ProgressDetailPage implements OnInit {
+    date: string;
+  type: 'string';
+
+
     goalObservable: Observable<any>;
     dailyActive: Goal;
     weeklyActive: Goal;
@@ -357,5 +361,9 @@ export class ProgressDetailPage implements OnInit {
     slideNext() {
         this.slides.slideNext();
     }
+
+    onChange($event) {
+        console.log($event);
+      }
 }
 
