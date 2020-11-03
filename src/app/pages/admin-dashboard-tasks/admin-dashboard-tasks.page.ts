@@ -26,11 +26,6 @@ export class AdminDashboardTasksPage implements OnInit {
         this.taskService.getAllAvailableTasks().subscribe(data => {
             this.tasks = data;
             console.log(this.tasks);
-            this.tasks.forEach((task) => {
-
-                task.startTimeIso = task.startTime.toISOString();
-                task.endTimeIso = task.endTime.toISOString();
-            });
         });
 
         this.userService.getUsers().subscribe(data => this.users = data);
@@ -41,8 +36,6 @@ export class AdminDashboardTasksPage implements OnInit {
 
         this.assign(task, task.assignee);
 
-        task.startTime = new Date(task.startTimeIso);
-        task.endTime = new Date(task.endTimeIso);
         task.startTime.setHours(0, 0, 0, 0);
         task.endTime.setHours(23, 59, 59, 999);
         this.taskService.editTask(task).then(

@@ -66,7 +66,6 @@ export class RewardsChallengesPage implements OnInit, OnDestroy {
      * this adds an challenge if you want to participate
      */
     addToActiveList(challenge: Task) {
-        this.challengeService.registerOnTask(challenge);
         this.challengeService.addTaskToActive(challenge);
     }
 
@@ -76,7 +75,6 @@ export class RewardsChallengesPage implements OnInit, OnDestroy {
      */
     removeFromActiveList(activeChallenge: Task) {
         this.challenges.push(activeChallenge);
-        this.challengeService.deRegisterOnTask(activeChallenge);
         this.challengeService.removeTaskFromActive(activeChallenge);
     }
 
