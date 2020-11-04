@@ -13,7 +13,8 @@ pipeline {
 
    stage('IOS Build') {
    steps {
-      sh 'ionic cordova build ios --release'
+      //sh 'ionic cordova build ios --release'
+         sh 'echo --> ios release here'
      } 
   }
 
