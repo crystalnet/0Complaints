@@ -31,6 +31,10 @@ const routes: Routes = [
       {
         path: 'articles',
         loadChildren: '../admin-dashboard-articles/admin-dashboard-articles.module#AdminDashboardArticlesPageModule'
+      },
+      {
+        path: 'shift',
+        loadChildren: '../admin-dashboard-shift//admin-dashboard-shift/admin-dashboard-shift.module#AdminDashboardShiftPageModule'
       }
     ]
   },

@@ -23,6 +23,10 @@ export class AdminDashboardPage implements OnInit {
       url: '/admin-dashboard/tasks'
     },
     {
+      title: 'Shift',
+      url: '/admin-dashboard/shift'
+    },
+    {
       title: 'Notifications',
       url: '/admin-dashboard/notifications'
     },

@@ -4,8 +4,11 @@ import 'firebase/auth';
 import {AngularFireDatabase} from '@angular/fire/database';
 
 import {Shift} from '../../model/shift';
-import {ShiftPart} from '../../model/shiftpart';
-import {ShiftPreference} from '../../model/shiftpreference';
+//import {ShiftPart} from '../../model/shiftpart';
+//import {ShiftPreference} from '../../model/shiftpreference';
+
+import {map} from 'rxjs/operators';
+import {merge, of} from 'rxjs';
 
 
 @Injectable({
@@ -27,7 +30,7 @@ createShift(shift: Shift){
   return new Promise<any>((resolve, reject) => {
     const id = firebase.database().ref().child('shift').child('shift').push().key;
     shift.id = id;
-
+    
     this.fireDatabase.database.ref('/shift/shift').child(id)
         .set(shift.toFirebaseObject()).then(
         // Returns the information with the new id
@@ -155,6 +158,13 @@ cancelShiftPart(shiftPart: Shift){
 */
 
 getAllActiveShiftsFromAllUsers(){
+
+  const ref = this.fireDatabase.list<any>('/shift/shift/');
+  // Retrieve an array, but with its metadata. This is necesary to have the key available
+  // An array of Goals is reconstructed using the fromFirebaseObject method
+  return ref.snapshotChanges().pipe(
+      map(shifts => shifts.map(shiftPayload => (Shift.fromFirebaseObject(shiftPayload.key, shiftPayload.payload.val())))));
+
 
 }
 
