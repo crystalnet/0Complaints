@@ -80,11 +80,14 @@
                 <ion-label>{{otherTask.title}}</ion-label>
                 <ion-label>{{otherTask.description}}</ion-label>
                 <ion-label>{{otherTask.endTime | date}}</ion-label>
-                <div class="item-note" slot="end">
+                <div *ngIf="otherTask.assignee !== 'not assigned'; else assignee">
+                    <ion-label slot="end">{{otherTask.assignee }}</ion-label>
+                </div>
+                <ng-template class="item-note" slot="end" #assignee>
                     <ion-button color="success" (click)="assign(otherTask)">
                         Assign
                     </ion-button>
-                </div>
+                </ng-template>
             </ion-item>
         </div>
     </ion-list>

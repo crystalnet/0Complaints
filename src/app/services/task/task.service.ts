@@ -112,7 +112,8 @@ export class TaskService {
      */
     finishTask(task: Task) {
         return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('finished')
+            this.fireDatabase.database.ref('/tasks/' + task.id).remove();
+            this.fireDatabase.database.ref('/tasks_finishes/' + task.id).child('finished')
                 .set('true').then(
                 res => resolve(res),
                 err => reject(err)

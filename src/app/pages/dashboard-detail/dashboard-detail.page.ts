@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {UserService} from 'src/app/services/user/user.service';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {Task} from '../../model/task';
 import {TaskService} from '../../services/task/task.service';
+import {first, map, mergeMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard-detail',
@@ -46,7 +47,7 @@ export class DashboardDetailPage implements OnInit {
     constructor(private userService: UserService, private taskService: TaskService) {
         this.group = userService.getUsergroup();
         this.group.subscribe(group => this.updateGroup(group));
-        this.tasks = taskService.getAllAvailableTasks();
+        this.tasks = taskService.getAllAvailableTasks().pipe(map(list => list.reverse()));
         this.tasks.subscribe((tasks: Task[]) => {
             this.activeTasks = [];
             this.myTasks = [];
@@ -60,7 +61,6 @@ export class DashboardDetailPage implements OnInit {
                         this.completedTasks.push(task);
                     } else {
                         this.myTasks.push(task);
-
                     }
                 } else if (!task.done) {
                     this.otherTasks.push(task);
@@ -97,4 +97,7 @@ export class DashboardDetailPage implements OnInit {
         this.taskService.assign(task, this.userService.getUid());
     }
 
+    getUser(uid) {
+        return this.userService.getUserById(uid);
+    }
 }
