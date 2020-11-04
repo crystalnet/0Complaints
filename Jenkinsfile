@@ -1,8 +1,8 @@
 pipeline {
       agent any
-      /*environment {
+      environment {
          PATH='/usr/local/bin:/usr/bin:/bin'
-      }*/
+      }
   stages {
       stage('NPM Setup') {
       steps {
