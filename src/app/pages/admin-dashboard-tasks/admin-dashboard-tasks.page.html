@@ -7,7 +7,7 @@
     </ion-toolbar>
 
     <section>
-        <ion-button color="secondary" slot="end" float-right padding (click)="presentPopover($event)">Create Task
+        <ion-button color="secondary" slot="end" (click)="presentPopover($event)">Create Task
         </ion-button>
     </section>
     <br><br><br>
@@ -50,7 +50,7 @@
 
 <ion-content>
 
-    <h2 padding>All open Tasks!</h2>
+    <h2>All open Tasks!</h2>
 
     <ng-container *ngFor="let challenge of tasks">
         <ion-row class="ion-align-items-end"
@@ -74,14 +74,14 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challenge.startTimeIso"></ion-datetime>
+                        <ion-datetime [(ngModel)]="challenge.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challenge.endTimeIso" [min]="challenge.startTimeIso"></ion-datetime>
+                        <ion-datetime [(ngModel)]="challenge.endTime" [min]="challenge.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -89,7 +89,8 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-select placeholder="Select One" [(ngModel)]="challenge.assignee">
-                        <ion-select-option  *ngFor="let user of users" [value]="user.id">{{user.name}}</ion-select-option>
+                        <ion-select-option *ngFor="let user of users"
+                                           [value]="user.id">{{user.name}}</ion-select-option>
                     </ion-select>
                 </ion-list>
             </ion-col>
@@ -101,7 +102,7 @@
         </ion-row>
     </ng-container>
 
-    <h2 padding>All finished Tasks!</h2>
+    <h2>All finished Tasks!</h2>
     <ng-container *ngFor="let challengeF of tasks">
         <ion-row class="ion-align-items-end"
                  *ngIf="challengeF.finished || challengeF.endTime.getTime() < today.getTime()">
@@ -124,7 +125,7 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challengeF.startTimeIso"></ion-datetime>
+                        <ion-datetime [(ngModel)]="challengeF.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -132,7 +133,7 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challengeF.endTimeIso"></ion-datetime>
+                        <ion-datetime [(ngModel)]="challengeF.endTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>

@@ -60,6 +60,10 @@ export class UserService {
         }
     }
 
+    getUid() {
+        return firebase.auth().currentUser.uid;
+    }
+
     getUserPublicData(userId: string) {
         return this.db.object<any>('/publicUserData/' + userId).snapshotChanges()
             .pipe(map(userSnapshot => UserPublicData.fromFirebaseObject(userId, userSnapshot.payload.val())));
