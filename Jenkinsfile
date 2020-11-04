@@ -3,13 +3,14 @@ pipeline {
       environment {
          PATH='/usr/local/bin:/usr/bin:/bin'
       }
-/*   stages {
+  stages {
       stage('NPM Setup') {
       steps {
-         sh 'npm install'
+         //sh 'npm install'
+            sh 'echo test'
       }
    }
-
+/*
    stage('IOS Build') {
    steps {
       sh 'ionic cordova build ios --release'
