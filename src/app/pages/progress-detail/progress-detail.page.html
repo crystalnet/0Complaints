@@ -6,11 +6,21 @@
         <ion-buttons slot="end">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Progress</ion-title>
+        <ion-title>Shifts</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
+    <div class="ion-padding">
+
+        <ion-calendar [(ngModel)]="date"
+          (onChange)="onChange($event)"
+          [type]="type"
+          [format]="'YYYY-MM-DD'">
+        </ion-calendar>
+    
+      </div>
+<!--
     <ion-slides [options]="slideOpts" #slides>
         <ng-container *ngFor="let n of [3,2,1]">
             <ion-slide>
@@ -71,7 +81,7 @@
                 </ion-card-content>
             </ion-card>
         </ion-slide>
-    </ion-slides>
+    </ion-slides>-->
 
 
     <ion-card>
