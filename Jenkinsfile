@@ -10,6 +10,7 @@ pipeline {
             sh 'echo test'
       }
    }
+  }
 /*
    stage('IOS Build') {
    steps {
