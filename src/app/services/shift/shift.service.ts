@@ -4,8 +4,8 @@ import 'firebase/auth';
 import {AngularFireDatabase} from '@angular/fire/database';
 
 import {Shift} from '../../model/shift';
-import {ShiftPart} from '../../model/shiftpart';
-import {ShiftPreference} from '../../model/shiftpreference';
+//import {ShiftPart} from '../../model/shiftpart';
+//import {ShiftPreference} from '../../model/shiftpreference';
 
 
 @Injectable({
