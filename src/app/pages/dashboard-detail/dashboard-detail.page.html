@@ -3,7 +3,7 @@
         <ion-buttons slot="end">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Dashboard</ion-title>
+        <ion-title>Tasks</ion-title>
     </ion-toolbar>
 </ion-header>
 
@@ -13,10 +13,12 @@
     <h4 class="ion-padding-horizontal">Active</h4>
     <ion-list>
         <ion-item *ngFor="let activeTask of activeTasks">
-            <ion-label>{{activeTask.title}}</ion-label>
-            <ion-label>{{activeTask.description}}</ion-label>
-            <ion-label>{{activeTask.endTime | date}}</ion-label>
+            <ion-label>{{activeTask.title}}
+                <br>Description: {{activeTask.description}}
+            </ion-label>
             <div class="item-note" slot="end">
+                
+                {{activeTask.endTime | date}}
                 <ion-button color="success" (click)="completeTask(activeTask)">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-button>
@@ -27,8 +29,6 @@
     <ion-list>
         <ion-item>
             <ion-label><b>Task</b></ion-label>
-            <ion-label><b>Description</b></ion-label>
-            <ion-label><b>Due</b></ion-label>
             <div class="item-note" slot="end">
                 <ion-button color="secondary">
                     <ion-icon name="add-outline"></ion-icon>
@@ -37,10 +37,9 @@
         </ion-item>
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let task of myTasks">
-                <ion-label>{{task.title}}</ion-label>
-                <ion-label>{{task.description}}</ion-label>
-                <ion-label>{{task.endTime | date}}</ion-label>
+                <ion-label text-wrap>{{task.title}}<p> Description: {{task.description}}</p></ion-label>
                 <div class="item-note" slot="end">
+                    {{task.endTime | date}}
                     <ion-button color="success" (click)="startTask(task)">
                         Start
                     </ion-button>
@@ -52,10 +51,10 @@
                 </div>
             </ion-item>
             <ion-item *ngFor="let completedTask of completedTasks" disabled="">
-                <ion-label>{{completedTask.title}}</ion-label>
-                <ion-label>{{completedTask.description}}</ion-label>
-                <ion-label>{{completedTask.endTime | date}}</ion-label>
+                <ion-label text-wrap>{{completedTask.title}}
+                    <p>Description: {{completedTask.description}}</p></ion-label>
                 <div class="item-note" slot="end">
+                    {{completedTask.endTime | date}}
                     <ion-button color="success" (click)="completeTask(completedTask)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-button>
@@ -63,12 +62,10 @@
             </ion-item>
         </div>
     </ion-list>
-    <h2 class="ion-padding-horizontal">Other Tasks</h2>
+    <h2 class="ion-padding-horizontal">All Tasks</h2>
     <ion-list>
         <ion-item>
             <ion-label><b>Task</b></ion-label>
-            <ion-label><b>Description</b></ion-label>
-            <ion-label><b>Due</b></ion-label>
             <div class="item-note" slot="end">
                 <ion-button color="secondary">
                     <ion-icon name="add-outline"></ion-icon>
@@ -77,13 +74,11 @@
         </ion-item>
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let otherTask of otherTasks">
-                <ion-label>{{otherTask.title}}</ion-label>
-                <ion-label>{{otherTask.description}}</ion-label>
-                <ion-label>{{otherTask.endTime | date}}</ion-label>
+                <ion-label text-wrap>{{otherTask.title}}<p>Description: {{otherTask.description}}</p></ion-label>
                 <div *ngIf="otherTask.assignee !== 'not assigned'; else assignee">
                     <ion-label slot="end">{{otherTask.assignee }}</ion-label>
                 </div>
-                <ng-template class="item-note" slot="end" #assignee>
+                <ng-template class="item-note" slot="end" #assignee> {{otherTask.endTime | date}}
                     <ion-button color="success" (click)="assign(otherTask)">
                         Assign
                     </ion-button>
