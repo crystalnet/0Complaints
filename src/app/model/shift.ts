@@ -24,7 +24,7 @@ export class Shift {
         this.startTime = startTime || new Date();
         this.participants = participants || [];
         this.preferenceList = preferenceList || [];
-        this.tasks = tasks|| [];
+        this.tasks = tasks || [];
     }
 
     static types = ['running', 'swimming', 'workout'];

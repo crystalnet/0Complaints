@@ -12,8 +12,8 @@ import {ShiftService} from '../services/shift/shift.service';
 export class ChallengePopoverComponent implements OnInit {
 
     challenge: Shift;
-    startTime: any;
-    endTime: any;
+    startTime: Date;
+    endTime: Date;
 
     constructor(public popoverController: PopoverController, private shiftService: ShiftService, public alertController: AlertController,
                 public toastController: ToastController) {

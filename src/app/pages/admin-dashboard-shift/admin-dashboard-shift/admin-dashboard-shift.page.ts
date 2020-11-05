@@ -21,6 +21,8 @@ export class AdminDashboardShiftPage implements OnInit {
 
   users : Array<User>;
 
+  today: Date = new Date();
+
 
   constructor(private shiftService: ShiftService, private userService: UserService, public toastController: ToastController, public popoverController: PopoverController) { 
 

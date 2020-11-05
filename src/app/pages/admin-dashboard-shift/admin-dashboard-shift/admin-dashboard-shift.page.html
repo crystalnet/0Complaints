@@ -60,14 +60,14 @@
           <ion-col size="2">
               <ion-list>
                   <ion-item>
-                      <ion-datetime [(ngModel)]="shift.startTimeIso"></ion-datetime>
+                      <ion-datetime [(ngModel)]="shift.startTime"></ion-datetime>
                   </ion-item>
               </ion-list>
           </ion-col>
           <ion-col size="2">
               <ion-list>
                   <ion-item>
-                      <ion-datetime [(ngModel)]="shift.endTimeIso" [min]="challenge.startTimeIso"></ion-datetime>
+                      <ion-datetime [(ngModel)]="shift.endTime" [min]="shift.startTime"></ion-datetime>
                   </ion-item>
               </ion-list>
           </ion-col>
