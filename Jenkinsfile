@@ -36,8 +36,14 @@ pipeline {
         sh 'npm run build --prod'
     }
   }
+        
+ stage('Publish to test-environment') {
+      steps {
+        echo 'Firebase test deploy'
+    }
+  }
 
-   stage('Publish Firebase Web') {
+   stage('Publish to productive-envrionment') {
       steps {
      // sh 'firebase deploy --token "Your Token Key"'
      echo 'Firebase deploy'
