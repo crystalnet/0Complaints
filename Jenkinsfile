@@ -27,7 +27,7 @@ pipeline {
    stage('APK Sign') {
    steps {
      // sh 'jarsigner -storepass initial01 -keystore keys/yourkey.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk 0Complaints'
-         sh 'here the jar signer'
+         sh 'echo here the jar signer'
    }
    }
 
