@@ -40,7 +40,7 @@ pipeline {
    stage('Publish Firebase Web') {
       steps {
      // sh 'firebase deploy --token "Your Token Key"'
-     ech 'Firebase deploy'
+     echo 'Firebase deploy'
    }
   }
 
