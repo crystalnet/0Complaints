@@ -112,4 +112,75 @@ export class AdminDashboardTasksPage implements OnInit {
             err => console.log(err)
         );
     }
+
+    createMockData(){
+        for(var i = 0; i<10; i++){
+        this.createOneMockTask();
+        }
+    }
+
+    createOneMockTask(){
+
+        let today = new Date(Date.now());
+
+        let randomNumDay = Math.random()*30;
+        let randomNumMonth = Math.random()*3;
+        let randomHour = Math.random()*13;
+        let randomMinute = Math.random()*60;
+        let randomMiliseconds = Math.random()*60;
+
+        let randomStartDate = new Date(today.getFullYear(), today.getMonth() - randomNumMonth, 31 - randomNumDay, 6+ randomHour, randomMinute, randomMiliseconds);
+
+        let randomEndDate = new Date(randomStartDate);
+
+        randomEndDate.setHours(20);
+        randomEndDate.setMinutes(0);
+        randomEndDate.setUTCMilliseconds(0);
+
+        //determine random work start (with logic)
+
+        let randomWorkStart = new Date(randomStartDate);
+        let randomWorkStartHour = randomStartDate.getHours() + Math.random()*10;
+        let randomWorkStartMinute = randomStartDate.getMinutes() + Math.random()*60;
+        
+        while(randomStartDate.getHours() > randomWorkStartHour || randomWorkStartHour > 19 ){
+            randomWorkStartHour = randomStartDate.getHours() + Math.random()*10;
+        }
+
+        if(randomStartDate.getHours() == randomWorkStartHour) {
+            while(randomStartDate.getMinutes() > randomWorkStartMinute || randomWorkStartMinute > 60 ){
+                randomWorkStartMinute = randomStartDate.getMinutes() + Math.random()*60;
+            }
+        }
+
+        randomWorkStart.setHours(randomWorkStartHour);
+        randomWorkStart.setMinutes(randomWorkStartMinute);
+
+
+        //determine random work end (with logic);
+        let randomWorkEnd = new Date(randomStartDate);
+
+        let randomWorkEndHour = randomWorkStartHour * Math.random()*10;
+        let randomWorkEndMinute = randomWorkStartMinute + Math.random()*60;
+
+        while(randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour > 19 || randomWorkEndHour < randomWorkStartHour){
+             randomWorkEndHour = randomWorkStartHour * Math.random()*10;
+        }
+
+        if(randomWorkStartHour == randomWorkEndHour ) {
+            while(randomWorkStartMinute > randomWorkEndMinute || randomWorkEndMinute > 60 ){
+                randomWorkEndMinute = randomWorkStartMinute + Math.random()*60;
+            }
+        }
+
+ 
+        let taskTemplate = Object.values(Task.getTaskTypes())[(Math.random()*8).toFixed(0)];
+
+        var urgency = ['low', 'medium', 'high'];
+
+        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', '', true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2])
+
+        this.taskService.createTask(testTask);
+
+    }
 }
