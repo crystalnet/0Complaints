@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {parse} from 'json2csv';
 import {first, flatMap, map} from 'rxjs/operators';
-import {forkJoin, from, Observable} from 'rxjs';
+import {forkJoin, from, Observable, zip} from 'rxjs';
 import {Trophy} from '../../model/trophy';
 import {Goal} from '../../model/goal';
 
@@ -27,8 +27,8 @@ export class ExportService {
                 fetchData = this.exportTrophies();
                 break;
             }
-            case 'challenges': {
-                fetchData = this.exportChallenges().toPromise();
+            case 'tasks': {
+                fetchData = this.exportTasks(id);
                 break;
             }
             default: {
@@ -188,28 +188,36 @@ export class ExportService {
         return this.db.list<any>('/trophyStatus/' + user).snapshotChanges().pipe(first(), map(
             // @ts-ignore
             trophiesList => trophiesList.flatMap(trophyCategory => {
-                    const trophies = trophyCategory.payload.val();
-                    if (trophyCategory.key === 'won') {
-                        return trophies.map(trophy => ({
-                            status: trophyCategory.key,
-                            trophyId: trophy.id,
-                            won: trophy.time
-                        }));
-                    } else {
-                        return trophies.map(trophy => ({status: trophyCategory.key, trophyId: trophy, won: null}));
-                    }
-                })
+                const trophies = trophyCategory.payload.val();
+                if (trophyCategory.key === 'won') {
+                    return trophies.map(trophy => ({
+                        status: trophyCategory.key,
+                        trophyId: trophy.id,
+                        won: trophy.time
+                    }));
+                } else {
+                    return trophies.map(trophy => ({status: trophyCategory.key, trophyId: trophy, won: null}));
+                }
+            })
         ));
     }
 
-    exportChallenges() {
-        return this.db.list<any>('/challenges/').snapshotChanges().pipe(first(), map(
-            challenges => challenges.map(challenge => {
-                const entry = challenge.payload.val();
-                entry.id = challenge.key;
+    exportTasks(groupId: string) {
+        const openTasks = this.db.list<any>('/tasks/' + groupId).snapshotChanges().pipe(first(), map(
+            tasks => tasks.map(task => {
+                const entry = task.payload.val();
+                entry.id = task.key;
                 return entry;
             })
         ));
+        const finishedTasks = this.db.list<any>('/tasks_finished/' + groupId).snapshotChanges().pipe(first(), map(
+            tasks => tasks.map(task => {
+                const entry = task.payload.val();
+                entry.id = task.key;
+                return entry;
+            })
+        ));
+        return zip(openTasks, finishedTasks).pipe(map(x => x[0].concat(x[1]))).toPromise();
     }
 
     exportWonChallenges(user: string) {

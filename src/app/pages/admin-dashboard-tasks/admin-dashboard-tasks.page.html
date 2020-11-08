@@ -103,9 +103,8 @@
     </ng-container>
 
     <h2>All finished Tasks!</h2>
-    <ng-container *ngFor="let challengeF of tasks">
-        <ion-row class="ion-align-items-end"
-                 *ngIf="challengeF.finished || challengeF.endTime.getTime() < today.getTime()">
+    <ng-container *ngFor="let challengeF of finishedTasks">
+        <ion-row class="ion-align-items-end">
             <ion-col size="2">
                 <ion-list>
                     <ion-item>

@@ -11,14 +11,14 @@ import {TaskService} from '../services/task/task.service';
 })
 export class ChallengePopoverComponent implements OnInit {
 
-    challenge: Task;
+    task: Task;
     startTime: any;
     endTime: any;
 
-    constructor(public popoverController: PopoverController, private challengeService: TaskService, public alertController: AlertController,
+    constructor(public popoverController: PopoverController, private taskService: TaskService, public alertController: AlertController,
                 public toastController: ToastController) {
-        this.challenge = new Task();
-        console.log(this.challenge);
+        this.task = new Task();
+        console.log(this.task);
 
     }
 
@@ -55,28 +55,28 @@ export class ChallengePopoverComponent implements OnInit {
 
     convertStartDate() {
 
-        this.challenge.startTime = new Date(this.startTime);
+        this.task.startTime = new Date(this.startTime);
 
     }
 
     convertEndDate() {
 
-        this.challenge.endTime = new Date(this.endTime);
+        this.task.endTime = new Date(this.endTime);
 
     }
 
     addChallenge() {
-        console.log(this.challenge);
+        console.log(this.task);
 
-        this.challenge.startTime.setHours(0, 0, 0, 0);
-        this.challenge.endTime.setHours(23, 59, 59, 999);
+        this.task.startTime.setHours(0, 0, 0, 0);
+        this.task.endTime.setHours(23, 59, 59, 999);
 
 
-        if (this.challenge.startTime.getTime() - this.challenge.endTime.getTime() > 0) {
+        if (this.task.startTime.getTime() - this.task.endTime.getTime() > 0) {
             return;
         }
 
-        this.challengeService.createTask(this.challenge).then(
+        this.taskService.createTask(this.task).then(
             (challenge) => {
                 console.log(challenge);
                 this.presentToast();

@@ -15,6 +15,7 @@ import {User} from 'src/app/model/user';
 })
 export class AdminDashboardTasksPage implements OnInit {
     tasks: Array<Task>;
+    finishedTasks: Array<Task>;
     tasksObserve: Task[];
     users: Array<User>;
     winnerId: string;
@@ -26,6 +27,11 @@ export class AdminDashboardTasksPage implements OnInit {
         this.taskService.getAllAvailableTasks().subscribe(data => {
             this.tasks = data;
             console.log(this.tasks);
+        });
+
+        this.taskService.getAllFinishedTasks().subscribe(data => {
+            this.finishedTasks = data;
+            console.log(this.finishedTasks);
         });
 
         this.userService.getUsers().subscribe(data => this.users = data);

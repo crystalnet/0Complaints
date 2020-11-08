@@ -8,14 +8,19 @@ import {ChallengesArray} from '../../model/challengesArray';
 
 import {map} from 'rxjs/operators';
 import {merge, of} from 'rxjs';
+import {UserService} from '../user/user.service';
 
 @Injectable({
     providedIn: 'root'
 })
 export class TaskService {
-
-    constructor(private fireDatabase: AngularFireDatabase) {
+    constructor(private fireDatabase: AngularFireDatabase, private userService: UserService) {
+        this.userService.getUser().subscribe(user => {
+            this.group = user.group;
+        });
     }
+
+    group: string;
 
     /**
      * Creates a new task in firebase from an activity objects
@@ -24,10 +29,11 @@ export class TaskService {
      */
     createTask(task: Task) {
         return new Promise<any>((resolve, reject) => {
-            const id = firebase.database().ref().child('tasks').push().key;
+            const id = firebase.database().ref().child('tasks/' + this.group).push().key;
             task.id = id;
-
-            this.fireDatabase.database.ref('/tasks/').child(id)
+            task.creator = this.userService.getUid();
+            task.group = this.group;
+            this.fireDatabase.database.ref('/tasks/' + this.group).child(id)
                 .set(task.toFirebaseObject()).then(
                 // Returns the information with the new id
                 () => resolve(task),
@@ -38,14 +44,23 @@ export class TaskService {
 
     editTask(task: Task) {
         console.log(task);
-        return firebase.database().ref('/tasks/' + task.id).set(task.toFirebaseObject());
+        return firebase.database().ref('/tasks/' + this.group + '/' + task.id).set(task.toFirebaseObject());
     }
 
     /**
      * this is needed to initially get all available tasks
      */
     getAllAvailableTasks() {
-        const ref = this.fireDatabase.list<any>('/tasks/');
+        const ref = this.fireDatabase.list<any>('/tasks/' + this.group);
+        return ref.snapshotChanges().pipe(map(task => task.map(
+            taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
+    }
+
+    /**
+     * this is needed to initially get all available tasks
+     */
+    getAllFinishedTasks() {
+        const ref = this.fireDatabase.list<any>('/tasks_finished/' + this.group);
         return ref.snapshotChanges().pipe(map(task => task.map(
             taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }
@@ -64,7 +79,7 @@ export class TaskService {
 
 
     getAllTasks() {
-        const ref = this.fireDatabase.list<any>('/tasks/');
+        const ref = this.fireDatabase.list<any>('/tasks/' + this.group);
         // Retrieve an array, but with its metadata. This is necesary to have the key available
         // An array of Goals is reconstructed using the fromFirebaseObject method
         return ref.snapshotChanges().pipe(
@@ -112,9 +127,9 @@ export class TaskService {
      */
     finishTask(task: Task) {
         return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).remove();
-            this.fireDatabase.database.ref('/tasks_finishes/' + task.id).child('finished')
-                .set('true').then(
+            this.fireDatabase.database.ref('/tasks/' + this.group + '/' + task.id).remove();
+            task.finished = true;
+            this.fireDatabase.database.ref('/tasks_finished/' + this.group + '/' + task.id).set(task).then(
                 res => resolve(res),
                 err => reject(err)
             );
@@ -122,8 +137,8 @@ export class TaskService {
     }
 
     /**
-     * finish the task, this method is called from the admin dashboard in order to disable further registration
-     * @param task identify the task
+     * Complete the task, this method is called from the admin dashboard in order to disable further registration
+     * @param task which was completed
      */
     completeTask(task: Task) {
         if (!task.workStart) {
@@ -136,13 +151,13 @@ export class TaskService {
     }
 
     /**
-     * after the finish, the researcher needs to manually determine the task winner
-     * @param task the task to identify
-     * @param uid the uid who wins this task
+     * Assign the task to an employee
+     * @param task the task to be assigned
+     * @param uid the uid of the user to assign the task to
      */
     assign(task: Task, uid: string) {
         return new Promise<any>((resolve, reject) => {
-            this.fireDatabase.database.ref('/tasks/' + task.id).child('assignee')
+            this.fireDatabase.database.ref('/tasks/' + this.group + '/' + task.id).child('assignee')
                 .set(uid).then(
                 res => resolve(res),
                 err => reject(err)
@@ -150,6 +165,10 @@ export class TaskService {
         });
     }
 
+    /**
+     * Start working on the task
+     * @param task the task to be started
+     */
     startTask(task: Task) {
         task.active = true;
         task.workStart = new Date();
