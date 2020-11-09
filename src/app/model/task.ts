@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 interface FireBaseObject {
     id: string;
     description: string;
@@ -83,15 +85,15 @@ export class Task {
 
         return {
             description: this.description,
-            endTime: this.endTime.getTime(),
-            startTime: this.startTime.getTime(),
+            endTime: moment(this.endTime).format('yyyy-mm-dd hh:mm:ss'),
+            startTime: moment(this.startTime).format('yyyy-mm-dd hh:mm:ss'),
             title: this.title,
             finished: this.finished,
             done: this.done,
             assignee: this.assignee,
             active: this.active,
-            workStart: this.workStart.getTime(),
-            workEnd: this.workEnd.getTime()
+            workStart: moment(this.workStart).format('yyyy-mm-dd hh:mm:ss'),
+            workEnd: moment(this.workEnd).format('yyyy-mm-dd hh:mm:ss')
         };
 
     }
