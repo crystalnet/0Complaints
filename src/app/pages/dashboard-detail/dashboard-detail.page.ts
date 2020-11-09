@@ -14,11 +14,30 @@ export class DashboardDetailPage implements OnInit {
 
     allServices = [];
 
-   
+    social = {
+        label: 'Social Feed',
+        routerLink: '/menu/socialfeed',
+        image: './assets/socialfeed2.png'
+    };
+
+    leaderboard = {
+        label: 'Leaderboard',
+        routerLink: '/menu/leaderboard',
+        image: './assets/leaderboard2.png'
+    };
+
+    rewards = {
+        label: 'Rewards',
+        routerLink: '/menu/rewards',
+        image: './assets/rewards2.png'
+    };
+
     group: Observable<string>;
     config: Observable<string>;
     selectedPath = '';
-   
+    leaderboardB = false;
+    socialB = false;
+    rewardsB = false;
     tasks: Observable<Task[]>;
     activeTasks: Task[];
     myTasks: Task[];
