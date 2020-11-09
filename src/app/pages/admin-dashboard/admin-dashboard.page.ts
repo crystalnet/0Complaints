@@ -25,10 +25,6 @@ export class AdminDashboardPage implements OnInit {
     {
       title: 'Notifications',
       url: '/admin-dashboard/notifications'
-    },
-    {
-      title: 'Articles',
-      url: '/admin-dashboard/articles'
     }
 
   ];

@@ -3,14 +3,13 @@
         <ion-buttons slot="end">
             <ion-menu-button></ion-menu-button>
         </ion-buttons>
-        <ion-title>Dashboard</ion-title>
+        <ion-title>Tasks</ion-title>
     </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="card-background-page">
     <h2 class="ion-padding-horizontal">My Tasks</h2>
-    <h4 class="ion-padding-horizontal">Active</h4>
     <ion-list>
         <ion-item *ngFor="let activeTask of activeTasks">
             <ion-label>{{activeTask.title}}</ion-label>

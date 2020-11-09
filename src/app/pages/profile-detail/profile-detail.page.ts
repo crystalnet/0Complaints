@@ -30,10 +30,7 @@ export interface MyData {
 
 export class ProfileDetailPage implements OnInit {
     currentUser: Observable<User>;
-    activities: Observable<Activity[]>;
-    displayedActivities: Observable<Activity[]>;
-    goals: Observable<any>;
-    goalStorage: Array<Goal>;
+    
     private imageCollection: AngularFirestoreCollection<MyData>;
     age: any;
 
@@ -45,9 +42,7 @@ export class ProfileDetailPage implements OnInit {
 
     constructor(private location: Location, private userService: UserService, private goalService: GoalService,
                 private activityService: ActivityService, private storage: AngularFireStorage, private database: AngularFirestore) {
-        this.activities = this.activityService.getAllUserActivities();
-        this.goals = this.goalService.getGoals().pipe(map(goals => goals.filter(goal => goal.type === 'active')));
-        this.goals.subscribe(goals => this.goalStorage = goals);
+      
         this.isUploading = false;
         this.isUploaded = false;
 
@@ -61,14 +56,6 @@ export class ProfileDetailPage implements OnInit {
         // this.router = router;
         this.currentUser = this.userService.getUser();
 
-        this.displayedActivities = this.activities.pipe(map(
-            (data) => {
-                // data.sort((a, b) => {
-                //   return b.startTime.getTime() - a.startTime.getTime();
-                // });
-                return data.slice(0, 5);
-            }
-        ));
 
     }
 
@@ -101,22 +88,7 @@ export class ProfileDetailPage implements OnInit {
 
     }
 
-    loadMoreActivities() {
-        let currentlyDisplayed = 0;
-        this.displayedActivities.subscribe(
-            c => currentlyDisplayed = c.length
-        );
-
-        const newDisplayedActivities = this.activities.pipe(
-            map(data => data.slice(0, currentlyDisplayed + 5))
-        );
-
-        this.displayedActivities = merge(
-            this.displayedActivities,
-            newDisplayedActivities
-        );
-    }
-
+   
     updateBio(bio) {
         this.userService.updateBio(bio);
     }
