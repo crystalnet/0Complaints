@@ -46,7 +46,7 @@
                     </ion-button>
                 </div>
                 <div class="item-note" slot="start">
-                    <ion-checkbox color="success" (click)="completeTask(task)">
+                    <ion-checkbox  color="success" (click)="completeTask(task)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
@@ -56,7 +56,7 @@
                 <ion-label>{{completedTask.description}}</ion-label>
                 <ion-label>{{completedTask.endTime | date}}</ion-label>
                 <div class="item-note" slot="start">
-                    <ion-checkbox color="success" (click)="completeTask(completedTask)">
+                    <ion-checkbox checked color="success" (click)="completeTask(completedTask)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
