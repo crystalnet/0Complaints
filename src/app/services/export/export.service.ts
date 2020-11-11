@@ -218,6 +218,7 @@ export class ExportService {
             })
         ));
         return zip(openTasks, finishedTasks).pipe(map(x => x[0].concat(x[1]))).toPromise();
+        //return zip(finishedTasks).pipe(map(x => x[0].concat(x[1]))).toPromise();
     }
 
     exportWonChallenges(user: string) {

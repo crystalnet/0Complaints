@@ -114,7 +114,9 @@ export class AdminDashboardTasksPage implements OnInit {
     }
 
     async createMockData(){
+        for(var i = 0; i<10; i++){
         this.createOneMockTask();
+        }
     }
 
     createOneMockTask(){
@@ -122,7 +124,7 @@ export class AdminDashboardTasksPage implements OnInit {
         let today = new Date(Date.now());
 
         let randomNumDay = Math.random()*30;
-        let randomNumMonth = Math.random()*3;
+        let randomNumMonth = Math.random()*2;
         let randomHour = Math.random()*13;
         let randomMinute = Math.random()*60;
         let randomMiliseconds = Math.random()*60;
@@ -172,11 +174,17 @@ export class AdminDashboardTasksPage implements OnInit {
         }
 
  
-        let taskTemplate = Object.values(Task.getTaskTypes())[(Math.random()*8).toFixed(0)];
+        let taskTemplate = Object.values(Task.getTaskTypes())[(Math.random()*9).toFixed(0)];
 
         var urgency = ['low', 'medium', 'high'];
 
-        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', null , true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2])
+        var customerAmount = ((Math.random()*20)+1).toFixed(0);
+
+        var store = Task.getStores()[(Math.random()*7).toFixed(0)];
+
+        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', null , true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2], customerAmount, store)
+
+        console.log(testTask);
 
         this.taskService.createTask(testTask);
 
