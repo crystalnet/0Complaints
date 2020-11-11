@@ -18,6 +18,8 @@ interface FireBaseObject {
     active: boolean;
     workStart: string;
     workEnd: string;
+    customerAmount: number;
+    store: string;
 }
 
 export class Task {
@@ -29,7 +31,7 @@ export class Task {
      */
     constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, title?: string, type?: string, creator?: string,
                 group?: string, finished?: boolean, assignee?: string, done?: boolean, active?: boolean, workStart?: Date, workEnd?: Date,
-                createdAt?: Date, urgency?: string) {
+                createdAt?: Date, urgency?: string, customerAmount?: number, store?: string) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
@@ -47,6 +49,8 @@ export class Task {
         this.workEnd = workEnd || new Date(0);
         this.createdAt = createdAt || new Date();
         this.urgency = urgency || 'low'
+        this.customerAmount = customerAmount || 0;
+        this.store = store || 'Mannheim';
     }
 
     static types = {
@@ -92,6 +96,9 @@ export class Task {
         }
 
     };
+
+    static stores = ["Frankfurt","Mannheim","Berlin","Muenchen","Hamburg","Koeln","Stuttgart","Freiburg"];
+
     id: string;
     description: string;
     endTime: Date;
@@ -108,6 +115,8 @@ export class Task {
     workEnd: Date;
     createdAt: Date;
     urgency: string;
+    customerAmount: number;
+    store: string;
 
     /**
      * Creates an Challenge object from a firebase query
@@ -133,7 +142,10 @@ export class Task {
             firebaseObject.active,
             new Date(firebaseObject.workStart) || new Date(),
             new Date(firebaseObject.workEnd) || new Date(),
-            new Date(firebaseObject.createdAt) || new Date()
+            new Date(firebaseObject.createdAt) || new Date(),
+            'low',
+            firebaseObject.customerAmount,
+            firebaseObject.store
         );
     }
 
@@ -148,8 +160,8 @@ export class Task {
 
         return {
             description: this.description,
-            endTime: moment(this.endTime).format('yyyy-mm-dd hh:mm:ss'),
-            startTime: moment(this.startTime).format('yyyy-mm-dd hh:mm:ss'),
+            endTime: moment(this.endTime).format('YYYY-MM-DD hh:mm:ss'),
+            startTime: moment(this.startTime).format('YYYY-MM-DD hh:mm:ss'),
             title: this.title,
             type: this.type,
             creator: this.creator,
@@ -158,13 +170,19 @@ export class Task {
             done: this.done,
             assignee: this.assignee,
             active: this.active,
-            workStart: moment(this.workStart).format('yyyy-mm-dd hh:mm:ss'),
-            workEnd: moment(this.workEnd).format('yyyy-mm-dd hh:mm:ss')
+            workStart: moment(this.workStart).format('YYYY-MM-DD hh:mm:ss'),
+            workEnd: moment(this.workEnd).format('YYYY-MM-YY hh:mm:ss'),
+            customerAmount: this.customerAmount,
+            store: this.store
         };
 
     }
 
     static getTaskTypes(){
         return this.types;
+    }
+
+    static getStores(){
+        return this.stores;
     }
 }
