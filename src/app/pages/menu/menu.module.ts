@@ -19,7 +19,6 @@ const routes: Routes = [
         children:
             [
                 {path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardPageModule'},
-                {path: 'add-activity', loadChildren: '../add-activity/add-activity.module#AddActivityPageModule'},
                 {path: 'credits', loadChildren: '../credits/credits.module#CreditsPageModule'},
                 {path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule'},
                 {
