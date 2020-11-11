@@ -113,10 +113,8 @@ export class AdminDashboardTasksPage implements OnInit {
         );
     }
 
-    createMockData(){
-        for(var i = 0; i<10; i++){
+    async createMockData(){
         this.createOneMockTask();
-        }
     }
 
     createOneMockTask(){
@@ -178,7 +176,7 @@ export class AdminDashboardTasksPage implements OnInit {
 
         var urgency = ['low', 'medium', 'high'];
 
-        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', '', true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2])
+        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', null , true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2])
 
         this.taskService.createTask(testTask);
 
