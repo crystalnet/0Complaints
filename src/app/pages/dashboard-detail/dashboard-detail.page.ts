@@ -55,6 +55,7 @@ export class DashboardDetailPage implements OnInit {
             this.otherTasks = [];
             for (const task of tasks) {
                 if (task.assignee === userService.getUid()) {
+
                     if (task.active) {
                         this.activeTasks.push(task);
                     } else if (task.done) {

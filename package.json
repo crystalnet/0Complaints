@@ -37,6 +37,7 @@
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.31",
     "ng-circle-progress": "^1.5.1",
+    "random-date-generator": "^1.0.2",
     "rxjs": "^6.5.5",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
