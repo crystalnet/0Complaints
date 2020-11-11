@@ -18,21 +18,9 @@ const routes: Routes = [
         data: {authGuardPipe: redirectUnauthorizedToLogin},
         children:
             [
-                {path: 'progress', loadChildren: '../progress/progress.module#ProgressPageModule'},
-                {path: 'socialfeed', loadChildren: '../socialfeed/socialfeed.module#SocialfeedPageModule'},
-                {path: 'leaderboard', loadChildren: '../leaderboard/leaderboard.module#LeaderboardPageModule'},
-                {path: 'rewards', loadChildren: '../rewards/rewards.module#RewardsPageModule'},
-                {path: 'information', loadChildren: '../information/information.module#InformationPageModule'},
                 {path: 'dashboard', loadChildren: '../dashboard/dashboard.module#DashboardPageModule'},
-                {path: 'add-activity', loadChildren: '../add-activity/add-activity.module#AddActivityPageModule'},
-                {path: 'edit-activity', loadChildren: '../edit-activity/edit-activity.module#EditActivityPageModule'},
                 {path: 'credits', loadChildren: '../credits/credits.module#CreditsPageModule'},
-                {path: 'goals', loadChildren: '../goals/goals.module#GoalsPageModule'},
                 {path: 'profile', loadChildren: '../profile/profile.module#ProfilePageModule'},
-                {
-                    path: 'set-goals',
-                    loadChildren: () => import('../set-goals/set-goals.module').then(m => m.SetGoalsPageModule)
-                },
                 {
                     path: 'initial-setup',
                     loadChildren: () => import('../initial-setup/initial-setup.module').then(m => m.InitialSetupPageModule)

@@ -39,10 +39,6 @@ const routes: Routes = [
         path: 'admin-dashboard-notifications',
         loadChildren: './pages/admin-dashboard-notifications/admin-dashboard-notifications.module#AdminDashboardNotificationsPageModule'
     },
-    {
-        path: 'admin-dashboard-articles',
-        loadChildren: './pages/admin-dashboard-articles/admin-dashboard-articles.module#AdminDashboardArticlesPageModule'
-    },
   {
     path: 'shift',
     loadChildren: () => import('./pages/shift/shift/shift.module').then( m => m.ShiftPageModule)

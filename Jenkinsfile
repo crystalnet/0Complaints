@@ -1,30 +1,33 @@
 pipeline {
       agent any
-      environment {
+     /* environment {
          PATH='/usr/local/bin:/usr/bin:/bin'
-      }
-   stages {
+      }*/
+  stages {
       stage('NPM Setup') {
       steps {
          sh 'npm install'
+            //sh 'echo test'
       }
    }
 
    stage('IOS Build') {
    steps {
-      sh 'ionic cordova build ios --release'
+      //sh 'ionic cordova build ios --release'
+         sh 'echo --> ios release here'
      } 
   }
 
    stage('Android Build') {
    steps {
-      sh 'ionic cordova build android --release'
+      sh 'ionic cordova build android'
    }
   }
 
    stage('APK Sign') {
    steps {
-      sh 'jarsigner -storepass initial01 -keystore keys/yourkey.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk 0Complaints'
+     // sh 'jarsigner -storepass initial01 -keystore keys/yourkey.keystore platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk 0Complaints'
+         sh 'echo here the jar signer'
    }
    }
 
@@ -33,11 +36,17 @@ pipeline {
         sh 'npm run build --prod'
     }
   }
+        
+ stage('Publish to test-environment') {
+      steps {
+        echo 'Firebase test deploy'
+    }
+  }
 
-   stage('Publish Firebase Web') {
+   stage('Publish to productive-envrionment') {
       steps {
      // sh 'firebase deploy --token "Your Token Key"'
-     ech 'Firebase deploy'
+     echo 'Firebase deploy'
    }
   }
 
