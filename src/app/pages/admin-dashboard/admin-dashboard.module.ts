@@ -27,6 +27,10 @@ const routes: Routes = [
       {
         path: 'notifications',
         loadChildren: '../admin-dashboard-notifications/admin-dashboard-notifications.module#AdminDashboardNotificationsPageModule'
+      }      ,
+      {
+        path: 'analytics',
+        loadChildren: '../admin-dashboard-analytics/admin-dashboard-analytics.module#AdminDashboardAnalyticsPageModule'
       }
     ]
   },

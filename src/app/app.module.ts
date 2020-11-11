@@ -23,6 +23,7 @@ import { Health } from '@ionic-native/health/ngx';
 import { IonicStorageModule } from '@ionic/storage';
 
 import { FCM } from 'cordova-plugin-fcm-with-dependecy-updated/ionic/ngx';
+import {DatePipe} from '@angular/common';
 
 const firebaseConfig = {
     apiKey: 'AIzaSyAbbpaQhoH_R7M3NVevSeWnjwZ8dLF4AS0',
@@ -61,6 +62,7 @@ const firebaseConfig = {
         AuthenticateService,
         Health,
         FCM,
+        DatePipe,
         {provide: RouteReuseStrategy, useClass: IonicRouteStrategy}
     ],
     bootstrap: [AppComponent]

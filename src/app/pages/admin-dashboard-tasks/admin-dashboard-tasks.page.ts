@@ -7,6 +7,7 @@ import {ChallengePopoverComponent} from 'src/app/challenge-popover/challenge-pop
 import {UserService} from 'src/app/services/user/user.service';
 import {RewardsService} from 'src/app/services/rewards/rewards.service';
 import {User} from 'src/app/model/user';
+import {Observable} from 'rxjs';
 
 @Component({
     selector: 'app-admin-dashboard-tasks',
@@ -16,7 +17,8 @@ import {User} from 'src/app/model/user';
 export class AdminDashboardTasksPage implements OnInit {
     tasks: Array<Task>;
     finishedTasks: Array<Task>;
-    tasksObserve: Task[];
+    finishedTasksObserve: Observable<Task[]>;
+    tasksObserve: Observable<Task[]>;
     users: Array<User>;
     winnerId: string;
     today: Date = new Date();
@@ -24,12 +26,14 @@ export class AdminDashboardTasksPage implements OnInit {
 
     constructor(private rewardsService: RewardsService, private taskService: TaskService, public popoverController: PopoverController,
                 private userService: UserService, public toastController: ToastController) {
-        this.taskService.getAllAvailableTasks().subscribe(data => {
+        this.tasksObserve = this.taskService.getAllAvailableTasks();
+        this.tasksObserve.subscribe(data => {
             this.tasks = data;
             console.log(this.tasks);
         });
 
-        this.taskService.getAllFinishedTasks().subscribe(data => {
+        this.finishedTasksObserve = this.taskService.getAllFinishedTasks();
+        this.finishedTasksObserve.subscribe(data => {
             this.finishedTasks = data;
             console.log(this.finishedTasks);
         });
@@ -113,43 +117,42 @@ export class AdminDashboardTasksPage implements OnInit {
         );
     }
 
-    async createMockData(){
-        for(var i = 0; i<10; i++){
-        this.createOneMockTask();
+    async createMockData() {
+        for (let i = 0; i < 10; i++) {
+            this.createOneMockTask();
         }
     }
 
-    createOneMockTask(){
+    createOneMockTask() {
+        const today = new Date(Date.now());
 
-        let today = new Date(Date.now());
+        const randomNumDay = Math.random() * 30;
+        const randomNumMonth = Math.random() * 2;
+        const randomHour = Math.random() * 13;
+        const randomMinute = Math.random() * 60;
+        const randomMiliseconds = Math.random() * 60;
 
-        let randomNumDay = Math.random()*30;
-        let randomNumMonth = Math.random()*2;
-        let randomHour = Math.random()*13;
-        let randomMinute = Math.random()*60;
-        let randomMiliseconds = Math.random()*60;
+        const randomStartDate = new Date(today.getFullYear(), today.getMonth() - randomNumMonth, 31 - randomNumDay, 6 + randomHour, randomMinute, randomMiliseconds);
 
-        let randomStartDate = new Date(today.getFullYear(), today.getMonth() - randomNumMonth, 31 - randomNumDay, 6+ randomHour, randomMinute, randomMiliseconds);
-
-        let randomEndDate = new Date(randomStartDate);
+        const randomEndDate = new Date(randomStartDate);
 
         randomEndDate.setHours(20);
         randomEndDate.setMinutes(0);
         randomEndDate.setUTCMilliseconds(0);
 
-        //determine random work start (with logic)
+        // determine random work start (with logic)
 
-        let randomWorkStart = new Date(randomStartDate);
-        let randomWorkStartHour = randomStartDate.getHours() + Math.random()*10;
-        let randomWorkStartMinute = randomStartDate.getMinutes() + Math.random()*60;
-        
-        while(randomStartDate.getHours() > randomWorkStartHour || randomWorkStartHour > 19 ){
-            randomWorkStartHour = randomStartDate.getHours() + Math.random()*10;
+        const randomWorkStart = new Date(randomStartDate);
+        let randomWorkStartHour = randomStartDate.getHours() + Math.random() * 10;
+        let randomWorkStartMinute = randomStartDate.getMinutes() + Math.random() * 60;
+
+        while (randomStartDate.getHours() > randomWorkStartHour || randomWorkStartHour > 19) {
+            randomWorkStartHour = randomStartDate.getHours() + Math.random() * 10;
         }
 
-        if(randomStartDate.getHours() == randomWorkStartHour) {
-            while(randomStartDate.getMinutes() > randomWorkStartMinute || randomWorkStartMinute > 60 ){
-                randomWorkStartMinute = randomStartDate.getMinutes() + Math.random()*60;
+        if (randomStartDate.getHours() === randomWorkStartHour) {
+            while (randomStartDate.getMinutes() > randomWorkStartMinute || randomWorkStartMinute > 60) {
+                randomWorkStartMinute = randomStartDate.getMinutes() + Math.random() * 60;
             }
         }
 
@@ -157,32 +160,36 @@ export class AdminDashboardTasksPage implements OnInit {
         randomWorkStart.setMinutes(randomWorkStartMinute);
 
 
-        //determine random work end (with logic);
-        let randomWorkEnd = new Date(randomStartDate);
+        // determine random work end (with logic);
+        const randomWorkEnd = new Date(randomStartDate);
 
-        let randomWorkEndHour = randomWorkStartHour * Math.random()*10;
-        let randomWorkEndMinute = randomWorkStartMinute + Math.random()*60;
+        let randomWorkEndHour = randomWorkStartHour * Math.random() * 10;
+        let randomWorkEndMinute = randomWorkStartMinute + Math.random() * 60;
 
-        while(randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour > 19 || randomWorkEndHour < randomWorkStartHour){
-             randomWorkEndHour = randomWorkStartHour * Math.random()*10;
+        // The following line is an infinite loop due to "randomWorkEndHour > 19", which is always true if randomWorkEndHour is >19
+        // while (randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour > 19 || randomWorkEndHour < randomWorkStartHour) {
+        while (randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour < randomWorkStartHour) {
+            randomWorkEndHour = randomWorkStartHour * Math.random() * 10;
         }
 
-        if(randomWorkStartHour == randomWorkEndHour ) {
-            while(randomWorkStartMinute > randomWorkEndMinute || randomWorkEndMinute > 60 ){
-                randomWorkEndMinute = randomWorkStartMinute + Math.random()*60;
+        if (randomWorkStartHour === randomWorkEndHour) {
+            while (randomWorkStartMinute > randomWorkEndMinute || randomWorkEndMinute > 60) {
+                randomWorkEndMinute = randomWorkStartMinute + Math.random() * 60;
             }
         }
 
- 
-        let taskTemplate = Object.values(Task.getTaskTypes())[(Math.random()*9).toFixed(0)];
 
-        var urgency = ['low', 'medium', 'high'];
+        const taskTemplate = Object.values(Task.getTaskTypes())[(Math.random() * 9).toFixed(0)];
 
-        var customerAmount = ((Math.random()*20)+1).toFixed(0);
+        const urgency = ['low', 'medium', 'high'];
 
-        var store = Task.getStores()[(Math.random()*7).toFixed(0)];
+        const customerAmount = parseInt(((Math.random() * 20) + 1).toFixed(0), 10);
 
-        let testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title, 'employee', null , true, 'manager', true, false, randomWorkStart, randomWorkEnd, randomStartDate, urgency[Math.random()*2], customerAmount, store)
+        const store = Task.getStores()[(Math.random() * 7).toFixed(0)];
+
+        const testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title,
+            'employee', null, true, 'manager', true, false, randomWorkStart, randomWorkEnd,
+            randomStartDate, urgency[Math.random() * 2], customerAmount, store);
 
         console.log(testTask);
 

@@ -54,13 +54,13 @@
 
     <ion-button color="secondary" (click)="createMockData()">Create mock data</ion-button>
 
-    <ng-container *ngFor="let challenge of tasks">
+    <ng-container *ngFor="let task of (tasksObserve | async)">
         <ion-row class="ion-align-items-end"
-                 *ngIf="!challenge.finished && challenge.endTime.getTime() > today.getTime()">
+                 *ngIf="!task.finished && task.endTime.getTime() > today.getTime()">
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-textarea [(ngModel)]="challenge.title"></ion-textarea>
+                        <ion-textarea [(ngModel)]="task.title"></ion-textarea>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -68,7 +68,7 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-textarea [(ngModel)]="challenge.description"></ion-textarea>
+                        <ion-textarea [(ngModel)]="task.description"></ion-textarea>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -76,21 +76,21 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challenge.startTime"></ion-datetime>
+                        <ion-datetime [(ngModel)]="task.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challenge.endTime" [min]="challenge.startTime"></ion-datetime>
+                        <ion-datetime [(ngModel)]="task.endTime" [min]="task.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
 
             <ion-col size="2">
                 <ion-list>
-                    <ion-select placeholder="Select One" [(ngModel)]="challenge.assignee">
+                    <ion-select placeholder="Select One" [(ngModel)]="task.assignee">
                         <ion-select-option *ngFor="let user of users"
                                            [value]="user.id">{{user.name}}</ion-select-option>
                     </ion-select>
@@ -98,19 +98,19 @@
             </ion-col>
 
             <ion-col size="2">
-                <ion-button color="secondary" (click)="editTask(challenge)">Save</ion-button>
-                <ion-button color="secondary" (click)="endTask(challenge)">End</ion-button>
+                <ion-button color="secondary" (click)="editTask(task)">Save</ion-button>
+                <ion-button color="secondary" (click)="endTask(task)">End</ion-button>
             </ion-col>
         </ion-row>
     </ng-container>
 
     <h2>All finished Tasks!</h2>
-    <ng-container *ngFor="let challengeF of finishedTasks">
+    <ng-container *ngFor="let taskF of (finishedTasksObserve | async)">
         <ion-row class="ion-align-items-end">
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-textarea [(ngModel)]="challengeF.title"></ion-textarea>
+                        <ion-textarea [(ngModel)]="taskF.title"></ion-textarea>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -118,7 +118,7 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-textarea [(ngModel)]="challengeF.description"></ion-textarea>
+                        <ion-textarea [(ngModel)]="taskF.description"></ion-textarea>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -126,7 +126,7 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challengeF.startTime"></ion-datetime>
+                        <ion-datetime [(ngModel)]="taskF.startTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
@@ -134,14 +134,14 @@
             <ion-col size="2">
                 <ion-list>
                     <ion-item>
-                        <ion-datetime [(ngModel)]="challengeF.endTime"></ion-datetime>
+                        <ion-datetime [(ngModel)]="taskF.endTime"></ion-datetime>
                     </ion-item>
                 </ion-list>
             </ion-col>
 
             <ion-col size="2">
                 <ion-list>
-                    <ion-select placeholder="Select One" [(ngModel)]="challengeF.assignee">
+                    <ion-select placeholder="Select One" [(ngModel)]="taskF.assignee">
                         <ion-select-option *ngFor="let user of users"
                                            [value]="user.id">{{user.name}}</ion-select-option>
                     </ion-select>

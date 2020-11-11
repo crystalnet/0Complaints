@@ -48,7 +48,7 @@ export class Task {
         this.workStart = workStart || new Date(0);
         this.workEnd = workEnd || new Date(0);
         this.createdAt = createdAt || new Date();
-        this.urgency = urgency || 'low'
+        this.urgency = urgency || 'low';
         this.customerAmount = customerAmount || 0;
         this.store = store || 'Mannheim';
     }
@@ -58,7 +58,7 @@ export class Task {
             title: 'accept delivery',
             description: 'Be at the drive in to accept the delivery. Sign the form and show the deliverant where to place the goods.'
         },
-        'cashier': {
+        cashier: {
             title: 'cashier',
             description: 'Be the cashier'
         },
@@ -69,7 +69,7 @@ export class Task {
         'customer-complaint': {
             title: 'Customer complaint',
             description: 'deal with customer complaint at hallway X'
-        },  
+        },
         'delivery-quality-check': {
             title: 'Qualitycheck of delivered goods',
             description: 'Check the quality of delivered goods'
@@ -97,7 +97,7 @@ export class Task {
 
     };
 
-    static stores = ["Frankfurt","Mannheim","Berlin","Muenchen","Hamburg","Koeln","Stuttgart","Freiburg"];
+    static stores = ['Frankfurt', 'Mannheim', 'Berlin', 'Muenchen', 'Hamburg', 'Koeln', 'Stuttgart', 'Freiburg'];
 
     id: string;
     description: string;
@@ -149,6 +149,14 @@ export class Task {
         );
     }
 
+    static getTaskTypes() {
+        return this.types;
+    }
+
+    static getStores() {
+        return this.stores;
+    }
+
     /**
      * Converts the challenge to upload it to firebase
      *
@@ -176,13 +184,5 @@ export class Task {
             store: this.store
         };
 
-    }
-
-    static getTaskTypes(){
-        return this.types;
-    }
-
-    static getStores(){
-        return this.stores;
     }
 }

@@ -46,7 +46,12 @@ const routes: Routes = [
   {
     path: 'admin-dashboard-shift',
     loadChildren: () => import('./pages/admin-dashboard-shift/admin-dashboard-shift/admin-dashboard-shift.module').then( m => m.AdminDashboardShiftPageModule)
+  },
+  {
+    path: 'admin-dashboard-analytics',
+    loadChildren: () => import('./pages/admin-dashboard-analytics/admin-dashboard-analytics.module').then(m => m.AdminDashboardAnalyticsPageModule)
   }
+
 
     // { path: 'admin-dashboard', loadChildren: './pages/<path-to-admin-dashboard>', canActivate: [AngularFireAuthGuard],
     //     data: {authGuardPipe: adminOnly} }
