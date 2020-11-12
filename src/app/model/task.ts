@@ -143,7 +143,7 @@ export class Task {
             new Date(firebaseObject.workStart) || new Date(),
             new Date(firebaseObject.workEnd) || new Date(),
             new Date(firebaseObject.createdAt) || new Date(),
-            'low',
+            firebaseObject.urgency,
             firebaseObject.customerAmount,
             firebaseObject.store
         );
@@ -180,6 +180,8 @@ export class Task {
             active: this.active,
             workStart: moment(this.workStart).format('YYYY-MM-DD hh:mm:ss'),
             workEnd: moment(this.workEnd).format('YYYY-MM-YY hh:mm:ss'),
+            createdAt: moment(this.createdAt).format('YYYY-MM-YY hh:mm:ss'),
+            urgency: this.urgency,
             customerAmount: this.customerAmount,
             store: this.store
         };

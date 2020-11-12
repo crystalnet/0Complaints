@@ -12,7 +12,7 @@
     <h2 class="ion-padding-horizontal">My Tasks</h2>
     <ion-list>
         <ion-list-header>My Tasks</ion-list-header>
-        <ion-item *ngFor="let activeTask of activeTasks">
+        <ion-item *ngFor="let activeTask of (activeTasks|async)">
             <ion-label>{{activeTask.title}}</ion-label>
             <ion-label>{{activeTask.description}}</ion-label>
             <ion-label>{{activeTask.endTime | date}}</ion-label>
@@ -36,7 +36,7 @@
             </div>
         </ion-item>
         <div *ngIf="(tasks | async)">
-            <ion-item *ngFor="let task of myTasks">
+            <ion-item *ngFor="let task of (myTasks|async)">
                 <ion-label>{{task.title}}</ion-label>
                 <ion-label>{{task.description}}</ion-label>
                 <ion-label>{{task.endTime | date}}</ion-label>
@@ -46,12 +46,12 @@
                     </ion-button>
                 </div>
                 <div class="item-note" slot="start">
-                    <ion-checkbox  color="success" (click)="completeTask(task)">
+                    <ion-checkbox color="success" (click)="completeTask(task)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
             </ion-item>
-            <ion-item *ngFor="let completedTask of completedTasks" disabled="">
+            <ion-item *ngFor="let completedTask of (completedTasks|async)" disabled="">
                 <ion-label>{{completedTask.title}}</ion-label>
                 <ion-label>{{completedTask.description}}</ion-label>
                 <ion-label>{{completedTask.endTime | date}}</ion-label>
@@ -76,7 +76,7 @@
             </div>
         </ion-item>
         <div *ngIf="(tasks | async)">
-            <ion-item *ngFor="let otherTask of otherTasks">
+            <ion-item *ngFor="let otherTask of (otherTasks|async)">
                 <ion-label>{{otherTask.title}}</ion-label>
                 <ion-label>{{otherTask.description}}</ion-label>
                 <ion-label>{{otherTask.endTime | date}}</ion-label>

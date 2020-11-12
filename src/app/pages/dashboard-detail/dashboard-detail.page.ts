@@ -3,7 +3,7 @@ import {UserService} from 'src/app/services/user/user.service';
 import {Observable, of} from 'rxjs';
 import {Task} from '../../model/task';
 import {TaskService} from '../../services/task/task.service';
-import {first, map, mergeMap} from 'rxjs/operators';
+import {filter, first, map, mergeMap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-dashboard-detail',
@@ -32,58 +32,32 @@ export class DashboardDetailPage implements OnInit {
         image: './assets/rewards2.png'
     };
 
-    group: Observable<string>;
     config: Observable<string>;
     selectedPath = '';
     leaderboardB = false;
     socialB = false;
     rewardsB = false;
     tasks: Observable<Task[]>;
-    activeTasks: Task[];
-    myTasks: Task[];
-    completedTasks: Task[];
-    otherTasks: Task[];
+    activeTasks: Observable<Task[]>;
+    myTasks: Observable<Task[]>;
+    completedTasks: Observable<Task[]>;
+    otherTasks: Observable<Task[]>;
 
     constructor(private userService: UserService, private taskService: TaskService) {
-        this.group = userService.getUsergroup();
-        this.group.subscribe(group => this.updateGroup(group));
-        this.tasks = taskService.getAllAvailableTasks().pipe(map(list => list.reverse()));
-        this.tasks.subscribe((tasks: Task[]) => {
-            this.activeTasks = [];
-            this.myTasks = [];
-            this.completedTasks = [];
-            this.otherTasks = [];
-            for (const task of tasks) {
-                if (task.assignee === userService.getUid()) {
-
-                    if (task.active) {
-                        this.activeTasks.push(task);
-                    } else if (task.done) {
-                        this.completedTasks.push(task);
-                    } else {
-                        this.myTasks.push(task);
-                    }
-                } else if (!task.done) {
-                    this.otherTasks.push(task);
-                }
-            }
-        });
+        console.log('asd');
+        userService.getUsergroup().then(
+            group => {
+                console.log('asdfasdf' + group);
+                this.tasks = taskService.getAllAvailableTasks(group).pipe(map(list => list.reverse()));
+                this.activeTasks = this.tasks.pipe(map(tasks => tasks.filter(task => task.active && task.assignee === this.userService.getUid())));
+                this.completedTasks = this.tasks.pipe(map(tasks => tasks.filter(task => task.done && task.assignee === this.userService.getUid())));
+                this.myTasks = this.tasks.pipe(map(tasks => tasks.filter(task => !task.active && !task.done && task.assignee === this.userService.getUid())));
+                this.otherTasks = this.tasks.pipe(map(tasks => tasks.filter(task => task.assignee !== this.userService.getUid())));
+            }, err => console.log(err)
+        );
     }
 
     ngOnInit() {
-    }
-
-    /**
-     * Update the group of the user
-     *
-     * This method updates the whole pages array when there is a new group available. This is necessary, because
-     * Angular cannot detect changes in the elements of the array.
-     *
-     * @param group the new group
-     */
-    updateGroup(group) {
-        // BK: as a test I delted for group 1 the rewards page
-        this.config = this.userService.getGroupconfig(group);
     }
 
     completeTask(task) {

@@ -5,7 +5,7 @@ import {AngularFireDatabase} from '@angular/fire/database';
 import {User} from '../../model/user';
 import {Group} from '../../model/group';
 import {UserPublicData} from '../../model/userPublicData';
-import {flatMap, map} from 'rxjs/operators';
+import {first, flatMap, map, tap} from 'rxjs/operators';
 import {Observable, of} from 'rxjs';
 import {TrackingService} from '../tracking/tracking.service';
 import {ActionLog} from '../../model/actionLog';
@@ -19,7 +19,7 @@ export class UserService {
 
     // returns the group the user is assigned to. Will be used in menu.page.ts
     getUsergroup() {
-        return this.db.object<string>('/users/' + firebase.auth().currentUser.uid + '/group').valueChanges();
+        return this.db.object<string>('/users/' + firebase.auth().currentUser.uid + '/group').valueChanges().pipe(first(), tap(val => console.log(val))).toPromise();
     }
 
     getGroupconfig(groupId) {
