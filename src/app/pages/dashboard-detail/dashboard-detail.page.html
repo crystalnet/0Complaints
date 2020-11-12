@@ -9,77 +9,89 @@
 
 
 <ion-content class="card-background-page">
-    <h2 class="ion-padding-horizontal">My Tasks</h2>
+
     <ion-list>
-        <ion-list-header>My Tasks</ion-list-header>
+        <ion-list-header>Active Tasks</ion-list-header>
         <ion-item *ngFor="let activeTask of (activeTasks|async)">
-            <ion-label>{{activeTask.title}}</ion-label>
-            <ion-label>{{activeTask.description}}</ion-label>
-            <ion-label>{{activeTask.endTime | date}}</ion-label>
+            <ion-label>
+                <h2>{{activeTask.title}}</h2>
+                <p>{{activeTask.description}}</p>
+                <p>{{activeTask.endTime | date}}</p></ion-label>
+
+
             <div class="item-note" slot="start">
                 <ion-checkbox color="success" (click)="completeTask(activeTask)">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-checkbox>
             </div>
+            <ion-icon name="stop" color="warning"></ion-icon>
         </ion-item>
     </ion-list>
 
     <ion-list>
-        <ion-item>
-            <ion-label><b>Task</b></ion-label>
-            <ion-label><b>Description</b></ion-label>
-            <ion-label><b>Due</b></ion-label>
-            <div class="item-note" slot="end">
-                <ion-button color="secondary">
-                    <ion-icon name="add-outline"></ion-icon>
-                </ion-button>
-            </div>
-        </ion-item>
+        <ion-list-header>Assigned Tasks</ion-list-header>
+
+
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let task of (myTasks|async)">
-                <ion-label>{{task.title}}</ion-label>
-                <ion-label>{{task.description}}</ion-label>
-                <ion-label>{{task.endTime | date}}</ion-label>
-                <div class="item-note" slot="end">
+                <ion-label><h2>{{task.title}}</h2>
+                    <p>{{task.description}}</p>
+                    <p>{{task.endTime | date}}</p>
+                </ion-label>
+
+
+                <ion-icon name="stop" color="warning" slot="end"></ion-icon>
+                <div class="item-note">
                     <ion-button color="success" (click)="startTask(task)">
                         Start
                     </ion-button>
                 </div>
+
+
                 <div class="item-note" slot="start">
                     <ion-checkbox color="success" (click)="completeTask(task)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
             </ion-item>
+
             <ion-item *ngFor="let completedTask of (completedTasks|async)" disabled="">
-                <ion-label>{{completedTask.title}}</ion-label>
-                <ion-label>{{completedTask.description}}</ion-label>
-                <ion-label>{{completedTask.endTime | date}}</ion-label>
+                <ion-label><h2>{{completedTask.title}}</h2>
+                    <p>{{completedTask.description}}</p>
+                    <p>{{completedTask.endTime | date}}</p>
+                </ion-label>
+
+
                 <div class="item-note" slot="start">
                     <ion-checkbox checked color="success" (click)="completeTask(completedTask)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
+                <ion-icon name="stop" color="warning"></ion-icon>
+            </ion-item>
+            <ion-item>
+                <div class="item-note" slot="end">
+                    <ion-button color="secondary">
+                        <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                </div>
             </ion-item>
         </div>
     </ion-list>
-    <h2 class="ion-padding-horizontal">Other Tasks</h2>
     <ion-list>
-        <ion-item>
-            <ion-label><b>Task</b></ion-label>
-            <ion-label><b>Description</b></ion-label>
-            <ion-label><b>Due</b></ion-label>
-            <div class="item-note" slot="end">
-                <ion-button color="secondary">
-                    <ion-icon name="add-outline"></ion-icon>
-                </ion-button>
-            </div>
-        </ion-item>
+        <ion-list-header>Other Tasks</ion-list-header>
+
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let otherTask of (otherTasks|async)">
-                <ion-label>{{otherTask.title}}</ion-label>
-                <ion-label>{{otherTask.description}}</ion-label>
-                <ion-label>{{otherTask.endTime | date}}</ion-label>
+                <ion-label><h2>{{otherTask.title}}</h2>
+                    <p>{{otherTask.description}}</p>
+                    <p>{{otherTask.endTime | date}}</p>
+                </ion-label>
+                <div class="item-note" slot="start">
+                    <ion-checkbox color="success" (click)="completeTask(otherTask)">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </ion-checkbox>
+                </div>
                 <div *ngIf="otherTask.assignee !== 'not assigned'; else assignee">
                     <ion-label slot="end">{{otherTask.assignee }}</ion-label>
                 </div>
@@ -88,20 +100,15 @@
                         Assign
                     </ion-button>
                 </ng-template>
+                <ion-icon name="stop" color="warning"></ion-icon>
+            </ion-item>
+            <ion-item>
+                <div class="item-note" slot="end">
+                    <ion-button color="secondary">
+                        <ion-icon name="add-outline"></ion-icon>
+                    </ion-button>
+                </div>
             </ion-item>
         </div>
     </ion-list>
 </ion-content>
-
-
-<!--<ion-row *ngFor="let row of allservices">
-    <ng-container *ngFor="let item of row">
-      <ion-col style="padding:1px;" [attr.col-8]="item.col8">
-        <ion-card [routerLink]='item.routerLink'>
-          <ion-item>
-        <div class="tile">{{item.label}}</div>
-      </ion-item>
-      </ion-card>
-      </ion-col>
-    </ng-container>
-  </ion-row>-->
