@@ -16,7 +16,7 @@
         <ion-col size="2">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Title</ion-label>
+                    <ion-label><h2>Title</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -24,7 +24,7 @@
         <ion-col size="2">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Description</ion-label>
+                    <ion-label><h2>Description</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -32,7 +32,7 @@
         <ion-col size="2">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Starts</ion-label>
+                    <ion-label><h2>Starts</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -40,7 +40,7 @@
         <ion-col size="2">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Ends</ion-label>
+                    <ion-label><h2>Ends</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -50,7 +50,7 @@
 
 <ion-content>
 
-    <h2>All open Tasks!</h2>
+    <h4>All open Tasks!</h4>
 
     <ng-container *ngFor="let challenge of tasks">
         <ion-row class="ion-align-items-end"
@@ -102,7 +102,7 @@
         </ion-row>
     </ng-container>
 
-    <h2>All finished Tasks!</h2>
+    <h4>All finished Tasks!</h4>
     <ng-container *ngFor="let challengeF of tasks">
         <ion-row class="ion-align-items-end"
                  *ngIf="challengeF.finished || challengeF.endTime.getTime() < today.getTime()">

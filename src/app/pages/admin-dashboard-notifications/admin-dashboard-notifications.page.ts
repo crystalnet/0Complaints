@@ -29,7 +29,7 @@ export class AdminDashboardNotificationsPage implements OnInit {
         this.userService.getUsers().subscribe(data => this.users = data);
         this.title2 = 'New message';
         this.body2 = 'You received a new message';
-        this.target2 = 'menu/leaderboard/leaderboard/detail';
+        this.target2 = 'menu/dashboard/dashboard/detail';
         this.confirmButtonText = 'Nice';
         this.rejectButtonText = 'Dismiss';
     }

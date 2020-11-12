@@ -14,7 +14,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>Title</ion-label>
+          <ion-label><h2>Title</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="title"></ion-input></ion-item>
       </ion-list>
@@ -32,7 +32,7 @@
     <ion-col size="8">
       <ion-list>
         <ion-list-header>
-          <ion-label>Body</ion-label>
+          <ion-label><h2>Body</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="body"></ion-input></ion-item>
       </ion-list>
@@ -40,7 +40,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>Send</ion-label>
+          <ion-label><h2>Send</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-button (click)="sendGoalNotification(title, body)" color="secondary">Send</ion-button></ion-item>
       </ion-list>
@@ -84,7 +84,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>Title</ion-label>
+          <ion-label><h2>Title</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="title2"></ion-input></ion-item>
       </ion-list>
@@ -93,7 +93,7 @@
     <ion-col size="6">
       <ion-list>
         <ion-list-header>
-          <ion-label>Body</ion-label>
+          <ion-label><h2>Body</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="body2"></ion-input></ion-item>
       </ion-list>
@@ -102,7 +102,7 @@
     <ion-col size="1">
       <ion-list>
         <ion-list-header>
-          <ion-label>Confirm Text</ion-label>
+          <ion-label><h2>Confirm Text</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="confirmButtonText"></ion-input></ion-item>
       </ion-list>
@@ -111,7 +111,7 @@
     <ion-col size="1">
       <ion-list>
         <ion-list-header>
-          <ion-label>Reject Text</ion-label>
+          <ion-label><h2>Reject Text</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="rejectButtonText"></ion-input></ion-item>
       </ion-list>
@@ -120,7 +120,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>Target Location</ion-label>
+          <ion-label><h2>Target Location</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="target2"></ion-input></ion-item>
       </ion-list>
@@ -129,7 +129,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>User</ion-label>
+          <ion-label><h2>User</h2></ion-label>
         </ion-list-header>
         <ion-select placeholder="Select One" [(ngModel)]="user">
           <ion-select-option  *ngFor="let user of users" [value]="user.id">{{user.name}}</ion-select-option>
@@ -140,7 +140,7 @@
     <ion-col size="2">
       <ion-list>
         <ion-list-header>
-          <ion-label>Send</ion-label>
+          <ion-label><h2>Send</h2></ion-label>
         </ion-list-header>
         <ion-item><ion-button (click)="sendNotification()" color="secondary">Send</ion-button></ion-item>
       </ion-list>

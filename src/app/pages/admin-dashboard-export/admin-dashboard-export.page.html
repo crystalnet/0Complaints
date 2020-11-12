@@ -36,20 +36,20 @@
   <ion-button color="light" (click)="export('defaultGoals', '')">Get goals</ion-button>
   <ion-button color="light" (click)="export('challenges', '')">Get challenges</ion-button>-->
 
-    <h2 padding>Download the data</h2>
+    <h4 padding>Download the data</h4>
     <section>
-        <ion-button color="secondary" padding>Download all</ion-button>
-        <ion-button color="secondary" padding>Download Group Data</ion-button>
+        <ion-button color="secondary" padding><ion-icon name="download"></ion-icon>Download all</ion-button>
+        <ion-button color="secondary" padding><ion-icon name="download"></ion-icon>Download Group Data</ion-button>
     </section>
     <br>
 
-    <h2>Download static data!</h2>
+    <h4>Download static data!</h4>
 
     <ion-row>
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Entity</ion-label>
+                    <ion-label><h2>Entity</h2></ion-label>
                 </ion-list-header>
                 <ion-item>
                     <ion-select [(ngModel)]="select" placeholder="Select One">
@@ -64,33 +64,24 @@
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data</ion-label>
+                    <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
 
-                <ion-button color="secondary" (click)="export(select, 'all', 'all')">Download</ion-button>
+                <ion-button color="secondary" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
 
             </ion-list>
         </ion-col>
     </ion-row>
 
-    <h2>Download data from all users!</h2>
+    <h4>Download data from all users!</h4>
 
     <ion-row>
-        <ion-col size="4">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Data for all Users</ion-label>
-                </ion-list-header>
-                <ion-item>
-                    <ion-text>All Users</ion-text>
-                </ion-item>
-            </ion-list>
-        </ion-col>
+     
 
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Entity</ion-label>
+                    <ion-label><h2>Entity</h2></ion-label>
                 </ion-list-header>
                 <ion-item>
                     <ion-select [(ngModel)]="select" placeholder="Select One">
@@ -110,23 +101,23 @@
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data</ion-label>
+                    <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
 
-                <ion-button color="secondary" (click)="export(select, 'all', 'all')">Download</ion-button>
+                <ion-button color="secondary" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
 
             </ion-list>
         </ion-col>
     </ion-row>
 
-    <h2>Download store data!</h2>
+    <h4>Download store data!</h4>
 
 
     <ion-row>
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data for all Groups</ion-label>
+                    <ion-label><h2>Data for all Groups</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -134,7 +125,7 @@
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Entity</ion-label>
+                    <ion-label><h2>Entity</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -142,7 +133,7 @@
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data</ion-label>
+                    <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -175,30 +166,30 @@
             </ion-list>
         </ion-col>
         <ion-col size="4">
-            <ion-button color="secondary" (click)="export(group.select, 'group', group.id)">Download</ion-button>
+            <ion-button color="secondary" (click)="export(group.select, 'group', group.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
         </ion-col>
     </ion-row>
 
-    <h2>Download user data!</h2>
+    <h4>Download user data!</h4>
     <ion-row>
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data for Users</ion-label>
+                    <ion-label><h2>Data for Users</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Entity</ion-label>
+                    <ion-label><h2>Entity</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
         <ion-col size="4">
             <ion-list>
                 <ion-list-header>
-                    <ion-label>Data</ion-label>
+                    <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
             </ion-list>
         </ion-col>
@@ -231,14 +222,14 @@
         </ion-col>
         <ion-col size="4">
             <ion-list>
-                <ion-button color="secondary" (click)="export(user.select, 'user', user.id)">Download</ion-button>
+                <ion-button color="secondary" (click)="export(user.select, 'user', user.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
             </ion-list>
         </ion-col>
     </ion-row>
 
-    <h2>Download the whole database!</h2>
+    <h4>Download the whole database!</h4>
     <ion-row>
-        <ion-button color="secondary" (click)="exportDb()">Download</ion-button>
+        <ion-button color="secondary" (click)="exportDb()"><ion-icon name="download"></ion-icon>Download</ion-button>
     </ion-row>
 </ion-content>
 

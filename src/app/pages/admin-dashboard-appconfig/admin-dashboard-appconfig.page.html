@@ -86,9 +86,7 @@
   </ion-row>
 </div>
 -->
-<section>
-<ion-button id="user" color="secondary"  slot="end" padding (click)="presentPopover($event)" float-right>New OTP</ion-button>
-</section>
+
 
 <ion-row>
   <h4 padding>Manage the users</h4>
@@ -124,13 +122,16 @@
 <div>
   <section>
     <h4 padding>Available One Time Passwords</h4>
+    <ion-button id="user" color="secondary"  slot="end" padding (click)="presentPopover($event)" float-right>New OTP</ion-button>
+    
   </section>
+  
 
   <ion-row>
     <ion-col size="4">
       <ion-list>
         <ion-list-header>
-          <ion-label>OTP</ion-label>
+          <ion-label><h2>OTP</h2></ion-label>
         </ion-list-header>
       </ion-list>
     </ion-col>
@@ -139,7 +140,7 @@
     <ion-col size="4">
       <ion-list>
         <ion-list-header>
-          <ion-label>Group</ion-label>
+          <ion-label><h2>Group</h2></ion-label>
         </ion-list-header>
       </ion-list>
     </ion-col>
