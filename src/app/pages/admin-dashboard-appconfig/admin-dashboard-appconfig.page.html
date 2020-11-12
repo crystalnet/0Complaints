@@ -111,21 +111,20 @@
 
   <ion-col size="4">
     <ion-list>
-   
-        <ion-button size="big" color="secondary" (click)="editUserconfig(user.id, user.group)" float-right>Save</ion-button>
-
+        <ion-button size="small" color="secondary" (click)="editUserconfig(user.id, user.group)" float-right><ion-icon name="save"></ion-icon>Save</ion-button>
     </ion-list>
   </ion-col>
 </ion-row>
 </div>
-
 <div>
-  <section>
+  <ion-row >
+  <ion-col size="8">
     <h4 padding>Available One Time Passwords</h4>
-    <ion-button id="user" color="secondary"  slot="end" padding (click)="presentPopover($event)" float-right>New OTP</ion-button>
-    
-  </section>
-  
+    </ion-col>
+    <ion-col size="4">
+      <ion-button id="user" color="secondary" padding (click)="presentPopover($event)" float-right><ion-icon name="add-circle-outline"></ion-icon>New OTP</ion-button>
+  </ion-col>
+  </ion-row>
 
   <ion-row>
     <ion-col size="4">

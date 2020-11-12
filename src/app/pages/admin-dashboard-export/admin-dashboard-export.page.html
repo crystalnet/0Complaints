@@ -39,7 +39,7 @@
     <h4 padding>Download the data</h4>
     <section>
         <ion-button color="secondary" padding><ion-icon name="download"></ion-icon>Download all</ion-button>
-        <ion-button color="secondary" padding><ion-icon name="download"></ion-icon>Download Group Data</ion-button>
+        <ion-button color="secondary" padding><ion-icon name="download"></ion-icon>Download Store Data</ion-button>
     </section>
     <br>
 
@@ -67,7 +67,7 @@
                     <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
 
-                <ion-button color="secondary" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
+                <ion-button color="secondary" size="small" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
 
             </ion-list>
         </ion-col>
@@ -104,7 +104,7 @@
                     <ion-label><h2>Data</h2></ion-label>
                 </ion-list-header>
 
-                <ion-button color="secondary" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
+                <ion-button color="secondary" size="small" (click)="export(select, 'all', 'all')"><ion-icon name="download"></ion-icon>Download</ion-button>
 
             </ion-list>
         </ion-col>
@@ -166,7 +166,7 @@
             </ion-list>
         </ion-col>
         <ion-col size="4">
-            <ion-button color="secondary" (click)="export(group.select, 'group', group.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
+            <ion-button color="secondary" size="small" (click)="export(group.select, 'group', group.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
         </ion-col>
     </ion-row>
 
@@ -222,7 +222,7 @@
         </ion-col>
         <ion-col size="4">
             <ion-list>
-                <ion-button color="secondary" (click)="export(user.select, 'user', user.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
+                <ion-button size="small" color="secondary" (click)="export(user.select, 'user', user.id)"><ion-icon name="download"></ion-icon>Download</ion-button>
             </ion-list>
         </ion-col>
     </ion-row>
