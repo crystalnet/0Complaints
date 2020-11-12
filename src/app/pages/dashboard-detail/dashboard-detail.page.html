@@ -17,6 +17,7 @@
                 <h2>{{activeTask.title}}</h2>
             <p>{{activeTask.description}}</p>
             <p>{{activeTask.endTime | date}}</p></ion-label>
+
             <div class="item-note" slot="start">
                 <ion-checkbox color="success" (click)="completeTask(activeTask)">
                     <ion-icon name="checkmark"></ion-icon>
@@ -36,7 +37,9 @@
                 <p>{{task.description}}</p>
                 <p>{{task.endTime | date}}</p>
                 </ion-label>
+               
                 <div class="item-note" slot="end">
+                    
                     <ion-button color="success" (click)="startTask(task)">
                         Start
                     </ion-button>
@@ -52,6 +55,7 @@
                 <p>{{completedTask.description}}</p>
                 <p>{{completedTask.endTime | date}}</p>
                 </ion-label>
+               
                 <div class="item-note" slot="start">
                     <ion-checkbox checked color="success" (click)="completeTask(completedTask)">
                         <ion-icon name="checkmark"></ion-icon>
@@ -77,6 +81,11 @@
                     <p>{{otherTask.description}}</p>
                     <p>{{otherTask.endTime | date}}</p>
                 </ion-label>
+                <div class="item-note" slot="start">
+                    <ion-checkbox color="success" (click)="completeTask(activeTask)">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </ion-checkbox>
+                </div>
                 <div *ngIf="otherTask.assignee !== 'not assigned'; else assignee">
                     <ion-label slot="end">{{otherTask.assignee }}</ion-label>
                 </div>
