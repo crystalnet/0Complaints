@@ -3,6 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DashboardDetailPage } from './dashboard-detail.page';
 
+
+
 describe('DashboardDetailPage', () => {
   let component: DashboardDetailPage;
   let fixture: ComponentFixture<DashboardDetailPage>;
@@ -24,4 +26,6 @@ describe('DashboardDetailPage', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  
 });
