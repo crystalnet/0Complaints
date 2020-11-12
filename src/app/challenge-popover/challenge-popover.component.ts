@@ -29,7 +29,7 @@ export class ChallengePopoverComponent implements OnInit {
         await this.toastController.create({
             color: 'dark',
             duration: 2000,
-            message: 'Challenge added successfully!',
+            message: 'Task added successfully!',
             buttons: [
                 {
                     text: 'Done',
