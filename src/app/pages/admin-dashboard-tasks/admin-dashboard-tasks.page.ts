@@ -8,6 +8,7 @@ import {UserService} from 'src/app/services/user/user.service';
 import {RewardsService} from 'src/app/services/rewards/rewards.service';
 import {User} from 'src/app/model/user';
 import {Observable} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 @Component({
     selector: 'app-admin-dashboard-tasks',
@@ -15,8 +16,6 @@ import {Observable} from 'rxjs';
     styleUrls: ['./admin-dashboard-tasks.page.scss'],
 })
 export class AdminDashboardTasksPage implements OnInit {
-    tasks: Array<Task>;
-    finishedTasks: Array<Task>;
     finishedTasksObserve: Observable<Task[]>;
     tasksObserve: Observable<Task[]>;
     users: Array<User>;
@@ -26,17 +25,11 @@ export class AdminDashboardTasksPage implements OnInit {
 
     constructor(private rewardsService: RewardsService, private taskService: TaskService, public popoverController: PopoverController,
                 private userService: UserService, public toastController: ToastController) {
-        this.tasksObserve = this.taskService.getAllAvailableTasks();
-        this.tasksObserve.subscribe(data => {
-            this.tasks = data;
-            console.log(this.tasks);
-        });
+        this.userService.getUsergroup().then(group => {
+            this.tasksObserve = this.taskService.getAllAvailableTasks(group).pipe(tap(el => console.log(el)));
+            this.finishedTasksObserve = this.taskService.getAllFinishedTasks(group);
 
-        this.finishedTasksObserve = this.taskService.getAllFinishedTasks();
-        this.finishedTasksObserve.subscribe(data => {
-            this.finishedTasks = data;
-            console.log(this.finishedTasks);
-        });
+        }, err => console.log(err));
 
         this.userService.getUsers().subscribe(data => this.users = data);
     }
@@ -82,19 +75,6 @@ export class AdminDashboardTasksPage implements OnInit {
     }
 
     ngOnInit() {
-    }
-
-    updateAllTasks(newTasks: Array<Task>) {
-        this.tasks = newTasks;
-    }
-
-    identifyTask(task: Task) {
-        console.log(task);
-        for (let i = 0; i < this.tasks.length; i++) {
-            if (this.tasks[i].title === task.title) {
-                this.tasks.splice(i, 1);
-            }
-        }
     }
 
     endTask(task: Task) {

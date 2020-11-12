@@ -8,30 +8,28 @@
 </ion-header>
 
 
-<ion-content class="card-background-page">
+<ion-content class="card-background-page ion-padding-horizontal">
+
+    <h2>Active Tasks</h2>
 
     <ion-list>
-        <ion-list-header>Active Tasks</ion-list-header>
-        <ion-item *ngFor="let activeTask of (activeTasks|async)">
+        <ion-item *ngFor="let activeTask of (activeTasks|async)" color="success">
             <ion-label>
                 <h2>{{activeTask.title}}</h2>
                 <p>{{activeTask.description}}</p>
                 <p>{{activeTask.endTime | date}}</p></ion-label>
 
-
-            <div class="item-note" slot="start">
+            <ion-icon name="stop" color="warning" slot="start"></ion-icon>
+            <div class="item-note" slot="end">
                 <ion-checkbox color="success" (click)="completeTask(activeTask)">
                     <ion-icon name="checkmark"></ion-icon>
                 </ion-checkbox>
             </div>
-            <ion-icon name="stop" color="warning"></ion-icon>
         </ion-item>
     </ion-list>
 
+    <h2> Assigned Tasks</h2>
     <ion-list>
-        <ion-list-header>Assigned Tasks</ion-list-header>
-
-
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let task of (myTasks|async)">
                 <ion-label><h2>{{task.title}}</h2>
@@ -40,7 +38,9 @@
                 </ion-label>
 
 
-                <ion-icon name="stop" color="warning" slot="end"></ion-icon>
+                <ion-icon name="stop" color="warning" slot="start" *ngIf="task.urgency === 'medium'"></ion-icon>
+                <ion-icon name="stop" color="success" slot="start" *ngIf="task.urgency === 'low'"></ion-icon>
+                <ion-icon name="stop" color="danger" slot="start" *ngIf="task.urgency === 'high'"></ion-icon>
                 <div class="item-note">
                     <ion-button color="success" (click)="startTask(task)">
                         Start
@@ -48,7 +48,7 @@
                 </div>
 
 
-                <div class="item-note" slot="start">
+                <div class="item-note" slot="end">
                     <ion-checkbox color="success" (click)="completeTask(task)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
@@ -62,51 +62,45 @@
                 </ion-label>
 
 
-                <div class="item-note" slot="start">
+                <div class="item-note" slot="end">
                     <ion-checkbox checked color="success" (click)="completeTask(completedTask)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
-                <ion-icon name="stop" color="warning"></ion-icon>
+                <ion-icon name="stop" color="warning" slot="start"
+                          *ngIf="completedTask.urgency === 'medium'"></ion-icon>
+                <ion-icon name="stop" color="success" slot="start" *ngIf="completedTask.urgency === 'low'"></ion-icon>
+                <ion-icon name="stop" color="danger" slot="start" *ngIf="completedTask.urgency === 'high'"></ion-icon>
             </ion-item>
-            <ion-item>
-                <div class="item-note" slot="end">
-                    <ion-button color="secondary">
-                        <ion-icon name="add-outline"></ion-icon>
-                    </ion-button>
-                </div>
-            </ion-item>
+
         </div>
     </ion-list>
-    <ion-list>
-        <ion-list-header>Other Tasks</ion-list-header>
 
+    <h2>Other Tasks</h2>
+
+    <ion-list>
         <div *ngIf="(tasks | async)">
             <ion-item *ngFor="let otherTask of (otherTasks|async)">
                 <ion-label><h2>{{otherTask.title}}</h2>
                     <p>{{otherTask.description}}</p>
-                    <p>{{otherTask.endTime | date}}</p>
+                    <p>{{otherTask.endTime | date:'MMM d, y, hh:mm'}}</p>
                 </ion-label>
-                <div class="item-note" slot="start">
-                    <ion-checkbox color="success" (click)="completeTask(otherTask)">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </ion-checkbox>
-                </div>
+
                 <div *ngIf="otherTask.assignee !== 'not assigned'; else assignee">
-                    <ion-label slot="end">{{otherTask.assignee }}</ion-label>
+                    <ion-label slot="end">{{userService.getSpecificUsername(otherTask.assignee) | async}}</ion-label>
                 </div>
                 <ng-template class="item-note" slot="end" #assignee>
                     <ion-button color="success" (click)="assign(otherTask)">
                         Assign
                     </ion-button>
                 </ng-template>
-                <ion-icon name="stop" color="warning"></ion-icon>
-            </ion-item>
-            <ion-item>
+                <ion-icon name="stop" color="warning" slot="start" *ngIf="otherTask.urgency === 'medium'"></ion-icon>
+                <ion-icon name="stop" color="success" slot="start" *ngIf="otherTask.urgency === 'low'"></ion-icon>
+                <ion-icon name="stop" color="danger" slot="start" *ngIf="otherTask.urgency === 'high'"></ion-icon>
                 <div class="item-note" slot="end">
-                    <ion-button color="secondary">
-                        <ion-icon name="add-outline"></ion-icon>
-                    </ion-button>
+                    <ion-checkbox color="success" (click)="assign(otherTask)">
+                        <ion-icon name="checkmark"></ion-icon>
+                    </ion-checkbox>
                 </div>
             </ion-item>
         </div>

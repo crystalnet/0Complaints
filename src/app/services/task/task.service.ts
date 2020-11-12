@@ -59,8 +59,8 @@ export class TaskService {
     /**
      * this is needed to initially get all available tasks
      */
-    getAllFinishedTasks() {
-        const ref = this.fireDatabase.list<any>('/tasks_finished/' + this.group);
+    getAllFinishedTasks(group) {
+        const ref = this.fireDatabase.list<any>('/tasks_finished/' + group);
         return ref.snapshotChanges().pipe(map(task => task.map(
             taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }

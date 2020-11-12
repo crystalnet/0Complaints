@@ -5,150 +5,84 @@
         </ion-buttons>
         <ion-title>Tasks</ion-title>
     </ion-toolbar>
-
-    <section>
-        <ion-button color="secondary" slot="end" (click)="presentPopover($event)">Create Task
-        </ion-button>
-    </section>
-    <br><br><br>
-
-    <ion-row>
-        <ion-col size="2">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Title</ion-label>
-                </ion-list-header>
-            </ion-list>
-        </ion-col>
-
-        <ion-col size="2">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Description</ion-label>
-                </ion-list-header>
-            </ion-list>
-        </ion-col>
-
-        <ion-col size="2">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Starts</ion-label>
-                </ion-list-header>
-            </ion-list>
-        </ion-col>
-
-        <ion-col size="2">
-            <ion-list>
-                <ion-list-header>
-                    <ion-label>Ends</ion-label>
-                </ion-list-header>
-            </ion-list>
-        </ion-col>
-    </ion-row>
-
 </ion-header>
 
-<ion-content>
+<ion-content class="ion-padding-horizontal">
+    <h2>Open Tasks</h2>
 
-    <h2>All open Tasks!</h2>
-
+    <ion-button color="secondary" (click)="presentPopover($event)">Create Task</ion-button>
     <ion-button color="secondary" (click)="createMockData()">Create mock data</ion-button>
 
-    <ng-container *ngFor="let task of (tasksObserve | async)">
-        <ion-row class="ion-align-items-end"
-                 *ngIf="!task.finished && task.endTime.getTime() > today.getTime()">
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-textarea [(ngModel)]="task.title"></ion-textarea>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-textarea [(ngModel)]="task.description"></ion-textarea>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-datetime [(ngModel)]="task.startTime"></ion-datetime>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-datetime [(ngModel)]="task.endTime" [min]="task.startTime"></ion-datetime>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-
-            <ion-col size="2">
-                <ion-list>
-                    <ion-select placeholder="Select One" [(ngModel)]="task.assignee">
+    <ion-list>
+        <ion-item *ngFor="let task of (tasksObserve|async)">
+            <ion-label>
+                <h2>{{task.title}}</h2>
+                <p>{{task.description}}</p>
+                <p>{{task.startTime | date:'MMM d, y, hh:mm'}}</p>
+            </ion-label>
+            <ion-label>
+                <h2>Assignee</h2>
+                <p>
+                    <ion-select class="ion-text-left" placeholder="Select One" [(ngModel)]="task.assignee"
+                                (ionChange)="editTask(task)">
                         <ion-select-option *ngFor="let user of users"
                                            [value]="user.id">{{user.name}}</ion-select-option>
                     </ion-select>
-                </ion-list>
-            </ion-col>
+                </p>
+            </ion-label>
 
-            <ion-col size="2">
-                <ion-button color="secondary" (click)="editTask(task)">Save</ion-button>
-                <ion-button color="secondary" (click)="endTask(task)">End</ion-button>
-            </ion-col>
-        </ion-row>
-    </ng-container>
 
-    <h2>All finished Tasks!</h2>
-    <ng-container *ngFor="let taskF of (finishedTasksObserve | async)">
-        <ion-row class="ion-align-items-end">
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-textarea [(ngModel)]="taskF.title"></ion-textarea>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
+            <ion-icon name="stop" color="warning" slot="start" *ngIf="task.urgency === 'medium'"></ion-icon>
+            <ion-icon name="stop" color="success" slot="start" *ngIf="task.urgency === 'low'"></ion-icon>
+            <ion-icon name="stop" color="danger" slot="start" *ngIf="task.urgency === 'high'"></ion-icon>
+            <div class="item-note">
+                <ion-button color="success" (click)="editTask(task)">
+                    Save
+                </ion-button>
+            </div>
 
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-textarea [(ngModel)]="taskF.description"></ion-textarea>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
+            <ion-button color="light" (click)="endTask(task)">
+                End
+                <ion-icon name="stop" color="danger" slot="end"></ion-icon>
+            </ion-button>
+        </ion-item>
+    </ion-list>
 
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-datetime [(ngModel)]="taskF.startTime"></ion-datetime>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
+    <h2>Finished Tasks</h2>
 
-            <ion-col size="2">
-                <ion-list>
-                    <ion-item>
-                        <ion-datetime [(ngModel)]="taskF.endTime"></ion-datetime>
-                    </ion-item>
-                </ion-list>
-            </ion-col>
-
-            <ion-col size="2">
-                <ion-list>
-                    <ion-select placeholder="Select One" [(ngModel)]="taskF.assignee">
+    <ion-list>
+        <ion-item *ngFor="let task of (finishedTasksObserve|async)" disabled="True">
+            <ion-label>
+                <h2>{{task.title}}</h2>
+                <p>{{task.description}}</p>
+                <p>{{task.startTime | date:'MMM d, y, hh:mm'}}</p>
+            </ion-label>
+            <ion-label>
+                <h2>Assignee</h2>
+                <p>
+                    <ion-select class="ion-text-left" placeholder="Select One" [(ngModel)]="task.assignee">
                         <ion-select-option *ngFor="let user of users"
                                            [value]="user.id">{{user.name}}</ion-select-option>
                     </ion-select>
-                </ion-list>
-            </ion-col>
-        </ion-row>
-    </ng-container>
+                </p>
+            </ion-label>
+
+
+            <ion-icon name="stop" color="warning" slot="start" *ngIf="task.urgency === 'medium'"></ion-icon>
+            <ion-icon name="stop" color="success" slot="start" *ngIf="task.urgency === 'low'"></ion-icon>
+            <ion-icon name="stop" color="danger" slot="start" *ngIf="task.urgency === 'high'"></ion-icon>
+            <ion-button color="light" *ngIf="task.done; else notDone">
+                Completed
+                <ion-icon name="stop" color="success" (click)="endTask(task)" slot="end"></ion-icon>
+            </ion-button>
+            <ng-template #notDone>
+                <ion-button color="warning" *ngIf="task.done; else notDone">
+                    Incomplete
+                    <ion-icon name="stop" color="danger" (click)="endTask(task)" slot="end"></ion-icon>
+                </ion-button>
+            </ng-template>
+        </ion-item>
+    </ion-list>
 
 
 </ion-content>

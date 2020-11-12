@@ -48,7 +48,7 @@ export class Task {
         this.workStart = workStart || new Date(0);
         this.workEnd = workEnd || new Date(0);
         this.createdAt = createdAt || new Date();
-        this.urgency = urgency || 'low';
+        this.urgency = urgency || 'medium';
         this.customerAmount = customerAmount || 0;
         this.store = store || 'Mannheim';
     }
@@ -96,6 +96,8 @@ export class Task {
         }
 
     };
+
+    static urgencies = ['low', 'medium', 'high'];
 
     static stores = ['Frankfurt', 'Mannheim', 'Berlin', 'Muenchen', 'Hamburg', 'Koeln', 'Stuttgart', 'Freiburg'];
 

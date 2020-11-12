@@ -33,24 +33,29 @@ const routes: Routes = [
         data: {authGuardPipe: redirectUnauthorizedToLogin}
     },
     {
-        path: 'admin-dashboard', loadChildren: './pages/admin-dashboard/admin-dashboard.module#AdminDashboardPageModule'
+        path: 'admin-dashboard',
+        loadChildren: './pages/admin-dashboard/admin-dashboard.module#AdminDashboardPageModule',
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
     },
     {
         path: 'admin-dashboard-notifications',
-        loadChildren: './pages/admin-dashboard-notifications/admin-dashboard-notifications.module#AdminDashboardNotificationsPageModule'
+        loadChildren: './pages/admin-dashboard-notifications/admin-dashboard-notifications.module#AdminDashboardNotificationsPageModule',
+        canActivate: [AngularFireAuthGuard],
+        data: {authGuardPipe: redirectUnauthorizedToLogin}
     },
-  {
-    path: 'shift',
-    loadChildren: () => import('./pages/shift/shift/shift.module').then( m => m.ShiftPageModule)
-  },
-  {
-    path: 'admin-dashboard-shift',
-    loadChildren: () => import('./pages/admin-dashboard-shift/admin-dashboard-shift/admin-dashboard-shift.module').then( m => m.AdminDashboardShiftPageModule)
-  },
-  {
-    path: 'admin-dashboard-analytics',
-    loadChildren: () => import('./pages/admin-dashboard-analytics/admin-dashboard-analytics.module').then(m => m.AdminDashboardAnalyticsPageModule)
-  }
+    {
+        path: 'shift',
+        loadChildren: () => import('./pages/shift/shift/shift.module').then(m => m.ShiftPageModule)
+    },
+    {
+        path: 'admin-dashboard-shift',
+        loadChildren: () => import('./pages/admin-dashboard-shift/admin-dashboard-shift/admin-dashboard-shift.module').then(m => m.AdminDashboardShiftPageModule)
+    },
+    {
+        path: 'admin-dashboard-analytics',
+        loadChildren: () => import('./pages/admin-dashboard-analytics/admin-dashboard-analytics.module').then(m => m.AdminDashboardAnalyticsPageModule)
+    }
 
 
     // { path: 'admin-dashboard', loadChildren: './pages/<path-to-admin-dashboard>', canActivate: [AngularFireAuthGuard],

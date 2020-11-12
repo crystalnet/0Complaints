@@ -1,24 +1,55 @@
 <ion-list>
     <ion-item>
+        <ion-label>Type</ion-label>
+        <ion-select [(ngModel)]="task.type" placeholder="Type" interface="popover" (ionChange)="selectType(task.type)"
+                    class="ion-float-right">
+            <ion-select-option *ngFor="let type of typeNames" [value]="type">{{type}}</ion-select-option>
+        </ion-select>
+
+    </ion-item>
+    <ion-item>
         <ion-label>Title</ion-label>
-        <ion-input [(ngModel)]="task.title" placeholder="Title" text-right></ion-input>
+        <ion-input class="ion-text-right" [(ngModel)]="task.title" placeholder="Title"></ion-input>
     </ion-item>
     <ion-item>
         <ion-label>Description</ion-label>
-        <ion-input [(ngModel)]="task.description" placeholder="Description" text-right></ion-input>
+        <ion-input class="ion-text-right" [(ngModel)]="task.description" placeholder="Description"></ion-input>
     </ion-item>
     <ion-item>
-        <ion-label>Start</ion-label>
-        <ion-datetime [(ngModel)]="startTime" placeholder="Start Time" (ionChange)="convertStartDate()"
-                      text-right></ion-datetime>
+        <ion-label>Start Date</ion-label>
+        <ion-datetime class="ion-float-right" [(ngModel)]="startDate" display-format="MMM D, YY"
+                      picker-format="MMM D, YYYY"
+                      minute-values="0,15,30,45" placeholder="Start Date"
+                      (ionChange)="convertStartDate()"></ion-datetime>
     </ion-item>
     <ion-item>
-        <ion-label>End</ion-label>
-        <ion-datetime [(ngModel)]="endTime" placeholder="End Time" (ionChange)="convertEndDate()"
-                      text-right></ion-datetime>
+        <ion-label>Time</ion-label>
+        <ion-datetime class="ion-float-right" [(ngModel)]="startTime" display-format="H:mm" minute-values="0,15,30,45"
+                      placeholder="Start Time"
+                      (ionChange)="convertStartTime()"></ion-datetime>
     </ion-item>
     <ion-item>
-        <ion-button (click)="addChallenge()" color="secondary" slot="end" float-right>Create</ion-button>
+        <ion-label>Urgency</ion-label>
+        <ion-select [(ngModel)]="task.urgency" interface="popover"                    class="ion-float-right">
+            <ion-select-option *ngFor="let urgency of urgencies" [value]="urgency">{{urgency}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>Assignee (optional)</ion-label>
+        <ion-select class="ion-float-right" placeholder="Select One" [(ngModel)]="task.assignee">
+            <ion-select-option *ngFor="let user of users"
+                               [value]="user.id">{{user.name}}</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>End Date (optional)</ion-label>
+        <ion-datetime class="ion-float-right" [(ngModel)]="endTime" display-format="MMM D, YY"
+                      minute-values="0,15,30,45" placeholder="End Time"
+                      (ionChange)="convertEndDate()"
+        ></ion-datetime>
+    </ion-item>
+    <ion-item>
+        <ion-button (click)="addChallenge()" color="secondary" slot="end">Create</ion-button>
     </ion-item>
     <label *ngIf='(task.startTime.getTime() - task.endTime.getTime()) > 0' class="error-message">End date has
         to be after start date</label>
