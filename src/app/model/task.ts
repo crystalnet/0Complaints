@@ -129,7 +129,7 @@ export class Task {
      * @param firebaseObject result of the query
      */
     static fromFirebaseObject(id: string, firebaseObject: FireBaseObject) {
-        return new Task(
+        const asdf = new Task(
             id || '',
             firebaseObject.description || '',
             new Date(firebaseObject.endTime) || new Date(),
@@ -149,6 +149,8 @@ export class Task {
             firebaseObject.customerAmount,
             firebaseObject.store
         );
+        console.log('asdf');
+        return asdf;
     }
 
     static getTaskTypes() {

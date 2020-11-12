@@ -49,7 +49,7 @@
 
 
                 <div class="item-note" slot="end">
-                    <ion-checkbox color="success" (click)="completeTask(task)">
+                    <ion-checkbox color="success" (click)="startTask(task)">
                         <ion-icon name="checkmark"></ion-icon>
                     </ion-checkbox>
                 </div>
@@ -97,11 +97,6 @@
                 <ion-icon name="stop" color="warning" slot="start" *ngIf="otherTask.urgency === 'medium'"></ion-icon>
                 <ion-icon name="stop" color="success" slot="start" *ngIf="otherTask.urgency === 'low'"></ion-icon>
                 <ion-icon name="stop" color="danger" slot="start" *ngIf="otherTask.urgency === 'high'"></ion-icon>
-                <div class="item-note" slot="end">
-                    <ion-checkbox color="success" (click)="assign(otherTask)">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </ion-checkbox>
-                </div>
             </ion-item>
         </div>
     </ion-list>

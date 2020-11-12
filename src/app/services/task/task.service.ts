@@ -84,7 +84,6 @@ export class TaskService {
         // An array of Goals is reconstructed using the fromFirebaseObject method
         return ref.snapshotChanges().pipe(
             map(tasks => tasks.map(goalPayload => (Task.fromFirebaseObject(goalPayload.key, goalPayload.payload.val())))));
-
     }
 
     getListOfAllUserAndTheirWonTasks() {
@@ -129,7 +128,7 @@ export class TaskService {
         return new Promise<any>((resolve, reject) => {
             this.fireDatabase.database.ref('/tasks/' + this.group + '/' + task.id).remove();
             task.finished = true;
-            this.fireDatabase.database.ref('/tasks_finished/' + this.group + '/' + task.id).set(task).then(
+            this.fireDatabase.database.ref('/tasks_finished/' + this.group + '/' + task.id).set(task.toFirebaseObject()).then(
                 res => resolve(res),
                 err => reject(err)
             );
