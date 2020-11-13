@@ -6,7 +6,7 @@ import {Task} from '../../model/task';
 
 import {ChallengesArray} from '../../model/challengesArray';
 
-import {map} from 'rxjs/operators';
+import {map, take} from 'rxjs/operators';
 import {merge, of} from 'rxjs';
 import {UserService} from '../user/user.service';
 
@@ -51,7 +51,7 @@ export class TaskService {
      * this is needed to initially get all available tasks
      */
     getAllAvailableTasks(group) {
-        const ref = this.fireDatabase.list<any>('/tasks/' + group);
+        const ref = this.fireDatabase.list<any>('/tasks/' + group, fn => fn.limitToLast(15));
         return ref.snapshotChanges().pipe(map(task => task.map(
             taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }
@@ -60,7 +60,7 @@ export class TaskService {
      * this is needed to initially get all available tasks
      */
     getAllFinishedTasks(group) {
-        const ref = this.fireDatabase.list<any>('/tasks_finished/' + group);
+        const ref = this.fireDatabase.list<any>('/tasks_finished/' + group, fn => fn.limitToLast(15));
         return ref.snapshotChanges().pipe(map(task => task.map(
             taskSnapshot => Task.fromFirebaseObject(taskSnapshot.key, taskSnapshot.payload.val()))));
     }
