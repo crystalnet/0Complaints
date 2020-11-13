@@ -11,7 +11,7 @@
     <h2>Open Tasks</h2>
 
     <ion-button color="secondary" (click)="presentPopover($event)">Create Task</ion-button>
-    <ion-button color="secondary" (click)="createMockData()">Create mock data</ion-button>
+    <ion-button style="display: none" color="secondary" (click)="createMockData()">Create mock data</ion-button>
 
     <ion-list>
         <ion-item *ngFor="let task of (tasksObserve|async)">

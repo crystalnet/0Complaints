@@ -11,26 +11,25 @@ export class AdminDashboardPage implements OnInit {
 
   pages = [
     {
-      title: 'AppConfig',
+      title: 'User Management',
       url: '/admin-dashboard/appconfig'
-    },
-    {
-      title: 'Export',
-      url: '/admin-dashboard/export'
     },
     {
       title: 'Tasks',
       url: '/admin-dashboard/tasks'
     },
     {
-      title: 'Notifications',
-      url: '/admin-dashboard/notifications'
-    },
-    {
       title: 'Analytics',
       url: '/admin-dashboard/analytics'
+    },
+    {
+      title: 'Export',
+      url: '/admin-dashboard/export'
+    },
+    {
+      title: 'Notifications',
+      url: '/admin-dashboard/notifications'
     }
-
   ];
 
   selectedPath = '';

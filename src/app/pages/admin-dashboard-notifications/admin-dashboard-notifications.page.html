@@ -7,78 +7,8 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <h2>Send Goal Push Notification to all Users!</h2>
-
-  <ion-row>
-    <ion-col size="2">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Title</ion-label>
-        </ion-list-header>
-        <ion-item><ion-input [(ngModel)]="title"></ion-input></ion-item>
-      </ion-list>
-    </ion-col>
-
-    <!--<ion-col size="3">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Trigger</ion-label>
-        </ion-list-header>
-        <ion-item>{{notification.trigger}}</ion-item>
-      </ion-list>
-    </ion-col>-->
-
-    <ion-col size="8">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Body</ion-label>
-        </ion-list-header>
-        <ion-item><ion-input [(ngModel)]="body"></ion-input></ion-item>
-      </ion-list>
-    </ion-col>
-    <ion-col size="2">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Send</ion-label>
-        </ion-list-header>
-        <ion-item><ion-button (click)="sendGoalNotification(title, body)" color="secondary">Send</ion-button></ion-item>
-      </ion-list>
-    </ion-col>
-
-    <!--<ion-col size="2">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Reaction</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-select [(ngModel)]="notifications.option1" placeholder="Select One" disabled="false">
-            <ion-select-option value="{{notification.option1}}">{{notification.option1}}</ion-select-option>
-            <ion-select-option value="{{notification.option2}}">{{notification.option2}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </ion-col>-->
-
-    <!--<ion-col size="2">
-      <ion-list>
-        <ion-list-header>
-          <ion-label>Group</ion-label>
-        </ion-list-header>
-        <ion-item>
-          <ion-select [(ngModel)]="notifications.groups" placeholder="Select One" disabled="false">
-            <ion-select-option value="{{notification.groups[0]}}">{{notification.groups[0]}}</ion-select-option>
-            <ion-select-option value="{{notification.groups[1]}}">{{notification.groups[1]}}</ion-select-option>
-            <ion-select-option value="{{notification.groups[2]}}">{{notification.groups[2]}}</ion-select-option>
-          </ion-select>
-        </ion-item>
-      </ion-list>
-    </ion-col>-->
-
-
-  </ion-row>
-
-  <h2>Send Push Notification to a specific user!</h2>
+<ion-content class="ion-padding-horizontal">
+  <h2>Send notification to users</h2>
 
   <ion-row>
     <ion-col size="2">
@@ -99,7 +29,7 @@
       </ion-list>
     </ion-col>
 
-    <ion-col size="1">
+    <!--ion-col size="1">
       <ion-list>
         <ion-list-header>
           <ion-label>Confirm Text</ion-label>
@@ -124,7 +54,7 @@
         </ion-list-header>
         <ion-item><ion-input [(ngModel)]="target2"></ion-input></ion-item>
       </ion-list>
-    </ion-col>
+    </ion-col-->
 
     <ion-col size="2">
       <ion-list>
