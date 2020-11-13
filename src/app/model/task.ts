@@ -20,6 +20,7 @@ interface FireBaseObject {
     workEnd: string;
     customerAmount: number;
     store: string;
+    workTime: number;
 }
 
 export class Task {
@@ -31,7 +32,7 @@ export class Task {
      */
     constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, title?: string, type?: string, creator?: string,
                 group?: string, finished?: boolean, assignee?: string, done?: boolean, active?: boolean, workStart?: Date, workEnd?: Date,
-                createdAt?: Date, urgency?: string, customerAmount?: number, store?: string) {
+                createdAt?: Date, urgency?: string, customerAmount?: number, store?: string, workTime?:number) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
@@ -51,6 +52,7 @@ export class Task {
         this.urgency = urgency || 'medium';
         this.customerAmount = customerAmount || 0;
         this.store = store || 'Mannheim';
+        this.workTime = workTime || this.calculateWorkTime();
     }
 
     static types = {
@@ -119,6 +121,7 @@ export class Task {
     urgency: string;
     customerAmount: number;
     store: string;
+    workTime: number;
 
     /**
      * Creates an Challenge object from a firebase query
@@ -147,7 +150,8 @@ export class Task {
             new Date(firebaseObject.createdAt) || new Date(),
             firebaseObject.urgency,
             firebaseObject.customerAmount,
-            firebaseObject.store
+            firebaseObject.store,
+            firebaseObject.workTime
         );
         console.log('asdf');
         return asdf;
@@ -161,6 +165,17 @@ export class Task {
         return this.stores;
     }
 
+    calculateWorkTime(){
+        console.log(this.workStart);
+        var startToMinute = this.workStart.getHours()*60+ this.workStart.getMinutes();
+        var endToMinute = this.workEnd.getHours()*60+ this.workEnd.getMinutes();
+        
+        var time = endToMinute-startToMinute;
+
+        console.log(time);
+       return time;
+    }
+
     /**
      * Converts the challenge to upload it to firebase
      *
@@ -172,8 +187,8 @@ export class Task {
 
         return {
             description: this.description,
-            endTime: moment(this.endTime).format('YYYY-MM-DD hh:mm:ss'),
-            startTime: moment(this.startTime).format('YYYY-MM-DD hh:mm:ss'),
+            endTime: moment(this.endTime).format('YYYY-MM-DD HH:MM:ss'),
+            startTime: moment(this.startTime).format('YYYY-MM-DD HH:MM:ss'),
             title: this.title,
             type: this.type,
             creator: this.creator,
@@ -182,12 +197,13 @@ export class Task {
             done: this.done,
             assignee: this.assignee,
             active: this.active,
-            workStart: moment(this.workStart).format('YYYY-MM-DD hh:mm:ss'),
-            workEnd: moment(this.workEnd).format('YYYY-MM-YY hh:mm:ss'),
-            createdAt: moment(this.createdAt).format('YYYY-MM-YY hh:mm:ss'),
+            workStart: moment(this.workStart).format('YYYY-MM-DD HH:MM:ss'),
+            workEnd: moment(this.workEnd).format('YYYY-MM-YY HH:MM:ss'),
+            createdAt: moment(this.createdAt).format('YYYY-MM-YY HH:MM:ss'),
             urgency: this.urgency,
             customerAmount: this.customerAmount,
-            store: this.store
+            store: this.store,
+            workTime: this.workTime
         };
 
     }

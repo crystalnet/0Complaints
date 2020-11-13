@@ -106,11 +106,11 @@ export class AdminDashboardTasksPage implements OnInit {
     createOneMockTask() {
         const today = new Date(Date.now());
 
-        const randomNumDay = Math.random() * 30;
-        const randomNumMonth = Math.random() * 2;
-        const randomHour = Math.random() * 13;
-        const randomMinute = Math.random() * 60;
-        const randomMiliseconds = Math.random() * 60;
+        const randomNumDay = (Math.random() * 30);
+        const randomNumMonth = (Math.random() * 2);
+        const randomHour = (Math.random() * 13);
+        const randomMinute = (Math.random() * 60);
+        const randomMiliseconds = (Math.random() * 60);
 
         const randomStartDate = new Date(today.getFullYear(), today.getMonth() - randomNumMonth, 31 - randomNumDay, 6 + randomHour, randomMinute, randomMiliseconds);
 
@@ -123,18 +123,17 @@ export class AdminDashboardTasksPage implements OnInit {
         // determine random work start (with logic)
 
         const randomWorkStart = new Date(randomStartDate);
-        let randomWorkStartHour = randomStartDate.getHours() + Math.random() * 10;
-        let randomWorkStartMinute = randomStartDate.getMinutes() + Math.random() * 60;
+        let randomWorkStartHour = (randomStartDate.getHours() + Math.random() * 10);
+        let randomWorkStartMinute = (randomStartDate.getMinutes() + Math.random() * 60);
 
         while (randomStartDate.getHours() > randomWorkStartHour || randomWorkStartHour > 19) {
-            randomWorkStartHour = randomStartDate.getHours() + Math.random() * 10;
+            randomWorkStartHour = (randomStartDate.getHours() + Math.random() * 10);
         }
 
-        if (randomStartDate.getHours() === randomWorkStartHour) {
-            while (randomStartDate.getMinutes() > randomWorkStartMinute || randomWorkStartMinute > 60) {
-                randomWorkStartMinute = randomStartDate.getMinutes() + Math.random() * 60;
-            }
+        while (randomStartDate.getMinutes() > randomWorkStartMinute || randomWorkStartMinute > 60) {
+                randomWorkStartMinute = (randomStartDate.getMinutes() + Math.random() * 60);
         }
+        
 
         randomWorkStart.setHours(randomWorkStartHour);
         randomWorkStart.setMinutes(randomWorkStartMinute);
@@ -143,20 +142,25 @@ export class AdminDashboardTasksPage implements OnInit {
         // determine random work end (with logic);
         const randomWorkEnd = new Date(randomStartDate);
 
-        let randomWorkEndHour = randomWorkStartHour * Math.random() * 10;
-        let randomWorkEndMinute = randomWorkStartMinute + Math.random() * 60;
+        let randomWorkEndHour = (randomWorkStartHour * Math.random() * 10);
+        let randomWorkEndMinute = (randomWorkStartMinute + Math.random() * 60);
 
         // The following line is an infinite loop due to "randomWorkEndHour > 19", which is always true if randomWorkEndHour is >19
         // while (randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour > 19 || randomWorkEndHour < randomWorkStartHour) {
-        while (randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour < randomWorkStartHour) {
-            randomWorkEndHour = randomWorkStartHour * Math.random() * 10;
+        while (randomWorkStart.getHours() > randomWorkEndHour || randomWorkEndHour > 19) {
+            randomWorkEndHour = (randomWorkStartHour * Math.random() * 10);
         }
 
         if (randomWorkStartHour === randomWorkEndHour) {
             while (randomWorkStartMinute > randomWorkEndMinute || randomWorkEndMinute > 60) {
-                randomWorkEndMinute = randomWorkStartMinute + Math.random() * 60;
+                randomWorkEndMinute = (randomWorkStartMinute + Math.random() * 60);
             }
+        }else {
+            randomWorkEndMinute = (randomWorkStartMinute + Math.random() * 60);
         }
+
+        randomWorkEnd.setHours(randomWorkEndHour);
+        randomWorkEnd.setMinutes(randomWorkEndMinute);
 
 
         const taskTemplate = Object.values(Task.getTaskTypes())[(Math.random() * 9).toFixed(0)];
@@ -169,7 +173,7 @@ export class AdminDashboardTasksPage implements OnInit {
 
         const testTask = new Task('', taskTemplate.description, randomEndDate, randomStartDate, taskTemplate.title, taskTemplate.title,
             'employee', null, true, 'manager', true, false, randomWorkStart, randomWorkEnd,
-            randomStartDate, urgency[Math.random() * 2], customerAmount, store);
+            randomStartDate, urgency[(Math.random() * 2).toFixed(0)], customerAmount, store);
 
         console.log(testTask);
 
