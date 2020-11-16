@@ -47,12 +47,6 @@
                     </ion-button>
                 </div>
 
-
-                <div class="item-note" slot="end">
-                    <ion-checkbox color="success" (click)="startTask(task)">
-                        <ion-icon name="checkmark"></ion-icon>
-                    </ion-checkbox>
-                </div>
             </ion-item>
 
             <ion-item *ngFor="let completedTask of (completedTasks|async)" disabled="">

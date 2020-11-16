@@ -32,7 +32,7 @@ export class Task {
      */
     constructor(id?: string, description?: string, endTime?: Date, startTime?: Date, title?: string, type?: string, creator?: string,
                 group?: string, finished?: boolean, assignee?: string, done?: boolean, active?: boolean, workStart?: Date, workEnd?: Date,
-                createdAt?: Date, urgency?: string, customerAmount?: number, store?: string, workTime?:number) {
+                createdAt?: Date, urgency?: string, customerAmount?: number, store?: string, workTime?: number) {
         // Each parameter is optional, if it's not there, set the default value
         this.id = id || '';
         this.description = description || '';
@@ -166,14 +166,7 @@ export class Task {
     }
 
     calculateWorkTime(){
-        console.log(this.workStart);
-        var startToMinute = this.workStart.getHours()*60+ this.workStart.getMinutes();
-        var endToMinute = this.workEnd.getHours()*60+ this.workEnd.getMinutes();
-        
-        var time = endToMinute-startToMinute;
-
-        console.log(time);
-       return time;
+        return (this.workEnd.getTime() - this.workStart.getTime()) / 60 * 1000;
     }
 
     /**
@@ -198,12 +191,12 @@ export class Task {
             assignee: this.assignee,
             active: this.active,
             workStart: moment(this.workStart).format('YYYY-MM-DD HH:MM:ss'),
-            workEnd: moment(this.workEnd).format('YYYY-MM-YY HH:MM:ss'),
-            createdAt: moment(this.createdAt).format('YYYY-MM-YY HH:MM:ss'),
+            workEnd: moment(this.workEnd).format('YYYY-MM-DD HH:MM:ss'),
+            createdAt: moment(this.createdAt).format('YYYY-MM-DD HH:MM:ss'),
             urgency: this.urgency,
             customerAmount: this.customerAmount,
             store: this.store,
-            workTime: this.workTime
+            workTime: this.calculateWorkTime()
         };
 
     }
