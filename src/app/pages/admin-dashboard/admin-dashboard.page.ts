@@ -26,9 +26,13 @@ export class AdminDashboardPage implements OnInit {
       title: 'Export',
       url: '/admin-dashboard/export'
     },
+    // {
+    //   title: 'Notifications',
+    //   url: '/admin-dashboard/notifications'
+    // },
     {
-      title: 'Notifications',
-      url: '/admin-dashboard/notifications'
+      title: 'Employee View',
+      url: '/menu/dashboard/dashboard/detail'
     }
   ];
 

@@ -18,6 +18,14 @@
                     </ion-item>
                 </ion-menu-toggle>
 
+                <ion-menu-toggle auto-hide="false">
+                    <ion-item tappable routerLink="/admin-dashboard" routerDirection="root">
+                        <!--<ion-icon name="log-out" slot="start"></ion-icon>-->
+                        Management Dashboard
+                    </ion-item>
+                </ion-menu-toggle>
+                
+
                 <ion-item tappable (click)=logout() routerLink="/login" routerDirection="root">
                     <!--<ion-icon name="log-out" slot="start"></ion-icon>-->
                     Logout

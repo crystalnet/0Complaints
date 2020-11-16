@@ -153,7 +153,11 @@ export class Task {
             firebaseObject.store,
             firebaseObject.workTime
         );
-        console.log('asdf');
+        if (isNaN(asdf.endTime.getTime())) {
+            console.log('NAN date generated');
+            console.log(firebaseObject);
+            console.log(asdf);
+        }
         return asdf;
     }
 
@@ -178,7 +182,7 @@ export class Task {
         console.log(this.endTime);
         console.log(this.startTime);
 
-        return {
+        const asdf =  {
             description: this.description,
             endTime: moment(this.endTime).format('YYYY-MM-DD HH:MM:ss'),
             startTime: moment(this.startTime).format('YYYY-MM-DD HH:MM:ss'),
@@ -198,6 +202,11 @@ export class Task {
             store: this.store,
             workTime: this.calculateWorkTime()
         };
-
+        if (asdf.workEnd === "Invalid Date") {
+            console.log('NAN date generated');
+            console.log(asdf);
+            console.log(this)
+        }
+        return asdf;
     }
 }
